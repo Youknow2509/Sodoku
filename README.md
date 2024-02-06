@@ -3,6 +3,8 @@
  - **Mail**: *lytranvinh.work@gmail.com*
  - **Github**: *https://github.com/Youknow2509*
 
+# Version 1.1 use oop
+
 # Luật chơi:
     - Game sẽ cho bạn một mảng 9 * 9, một vài giá trị sẽ đc xuất hiện và một vài giá trị sẽ bị ẩn.
     - Bạn hãy tìm hết tất cả giá trị ẩn sao cho: 
