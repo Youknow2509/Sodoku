@@ -5,28 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49a2fb2d-9c6d-420e-8690-01ab6afab252" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/javafx_swt.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/ContactController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/GameController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/GameDevelopController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/GameLoseController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/GameWinController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/LevelController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/MainGameController.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Example/Test.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Model/Generator.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Model/Node.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Model/Validate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/View/Contact.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/View/Game.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/View/GameDevelop.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/View/GameLose.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/View/GameWin.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/View/Level.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/View/MainGame.fxml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/View/ShowArray2d.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sudoku.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sudoku.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -39,7 +22,6 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
         <option value="Class" />
       </list>
     </option>
@@ -65,22 +47,16 @@
     "Application.Test.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "v1.1",
     "jdk.selected.JAVA_MODULE": "17",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/v/code/java/projects/sudoku",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "configurable.group.editor"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="src.Controller" />
-    </key>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
