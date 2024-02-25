@@ -60,4 +60,25 @@ public class Generator {
         }
         return false;
     }
+    // Coppy array 2d
+    public int[][] coppyArray2d(int[][] arr) {
+        int[][] arrCopy = new int[size][size];
+        for (int i = 0; i < size; i++) {
+            System.arraycopy(arr[i], 0, arrCopy[i], 0, size);
+        }
+        return arrCopy;
+    }
+    // remove digits
+    public void removeDigits(int[][] arr, int countRm) {
+        int count = 0;
+        while (count < countRm) {
+            int cellId = randomGenerator(81) - 1;
+            int i = cellId / 9;
+            int j = cellId % 9;
+            if (arr[i][j] != 0) {
+                count++;
+                arr[i][j] = 0;
+            }
+        }
+    }
 }
