@@ -1,16 +1,15 @@
 package src.Controller;
 
-import java.net.URL;
+import src.Model.ChangeScene;
+import src.Model.Game;
+import src.Model.NodeGame;
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
-
-import application.assest.SudokuGenerator;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,7 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class GameController implements Initializable {
+public class GameController {
 
     @FXML
     private AnchorPane anchorPane;
@@ -28,37 +27,45 @@ public class GameController implements Initializable {
     private Label labelLevel;
     @FXML
     private Label labelErr;
-
+    // Biến trong game
+    final Game game = new Game();
     private Map<String, Label> arrLabel = new HashMap<>();
     private Map<String, Button> arrButtonNumber = new HashMap<>();
+    NodeGame [][] solution;
+    NodeGame [][] mission;
+    int err = 1;
+    int otrong = 10;
 
-    SudokuGenerator sudokuGenerator = new SudokuGenerator();
-    int[][] solution = new int[9][9];
-    int[][] mission = new int[9][9];
     Label labelClicked; // dùng để đổi màu
     int rowLabelClicked;// lưu địa chỉ label vừa chọn
     int colLabelClicked;// lưu địa chỉ label vừa chọn
-    int err = 0;
-    int otrong = 0;
     boolean setValue = false;
 
-    @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
+    public void initialize(int n, int err, String level) {
 
-        System.out.println("creat game");
+        initElements(n);
 
-        // Khoi tao mang gia tri
-        solution = sudokuGenerator.generateSudoku();
-        mission = sudokuGenerator.coppyArray2d(solution);
-
-        load(otrong, err, "Test");
+        initVC(err, level);
     }
-
-    public void load(int otrong, int err, String labelLevel) {
-        sudokuGenerator.removeDigits(mission, otrong);
-        setLabelLevel(labelLevel);
+    public void initVC(int err, String level) {
+        this.err = err;
+        setLabelLevel(level);
         setLabelErr(err);
         setOtrong(otrong);
+        initBroad();
+        initNumber();
+    }
+    // Khởi tạo các mảng giá trị
+    public void initElements(int n) {
+        game.initData(n);
+
+        solution = game.getBoardRes();
+        mission = game.getBoardMissing();
+
+        otrong = n;
+    }
+    // Khởi tạo và gắn sự kiện vào các label
+    private void initBroad() {
         // Dung hashmap truy xuat cac phan tu Label va gan cac su kien cho cac label
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -67,8 +74,8 @@ public class GameController implements Initializable {
                 String name = "#arr" + String.valueOf(row) + String.valueOf(col);
                 Label label = (Label)anchorPane.lookup(name);
                 arrLabel.put(name, label);
-                if (mission[row][col] != 0) {
-                    arrLabel.get(name).setText(String.valueOf(mission[row][col]));
+                if (mission[row][col].getValue() != 0) {
+                    arrLabel.get(name).setText(String.valueOf(mission[row][col].getValue()));
                 } else {
                     arrLabel.get(name).setText("");
                 }
@@ -77,6 +84,9 @@ public class GameController implements Initializable {
                 });
             }
         }
+    }
+    // Khởi tạo và gắn sự kiện vào các number
+    private void initNumber() {
         // Dung de truy xuat va gan su kien cho Button nunmber
         for (int i = 1; i <= 9; i++) {
             final int number = i;
@@ -88,48 +98,8 @@ public class GameController implements Initializable {
             });
         }
     }
-
-    public void load(int otrong, int err, String labelLevel, int[][] res) {
-        System.out.println("Game Devolop");
-        solution = res;
-        mission = sudokuGenerator.coppyArray2d(solution);
-        sudokuGenerator.removeDigits(mission, otrong);
-        setLabelLevel(labelLevel);
-        setLabelErr(err);
-        setOtrong(otrong);
-        // Dung hashmap truy xuat cac phan tu Label va gan cac su kien cho cac label
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                final int row = i;
-                final int col = j;
-                String name = "#arr" + String.valueOf(row) + String.valueOf(col);
-                Label label = (Label)anchorPane.lookup(name);
-                arrLabel.put(name, label);
-                if (mission[row][col] != 0) {
-                    arrLabel.get(name).setText(String.valueOf(mission[row][col]));
-                } else {
-                    arrLabel.get(name).setText("");
-                }
-                label.setOnMouseClicked(event -> {
-                    handleClickLabel(row, col, event);
-                });
-            }
-        }
-        // Dung de truy xuat va gan su kien cho Button nunmber
-        for (int i = 1; i <= 9; i++) {
-            final int number = i;
-            String name = "#number" + String.valueOf(i);
-            Button button = (Button)anchorPane.lookup(name);
-            arrButtonNumber.put(name, button);
-            button.setOnMouseClicked(e -> {
-                handleClickNumber(number, e);
-            });
-        }
-    }
-
+    // Xử lý sự kiện khi click vào label
     private void handleClickLabel(int i, int j, MouseEvent e) {
-
-        System.out.println( i + " " + j + " " + e.getSource());
 
         Label click = (Label) e.getSource();
         changeTextFill(click, i, j);
@@ -138,26 +108,25 @@ public class GameController implements Initializable {
         }
         checkStatusGame(e);
     }
-
+    // Xử lý sự kiện khi click vào number
     private void handleClickNumber(int n, MouseEvent e) {
         Button b = (Button) e.getSource();
-        System.out.println(b);
-
         if (setValue) {
-            mission[rowLabelClicked][colLabelClicked] = n;
-            if (mission[rowLabelClicked][colLabelClicked] == solution[rowLabelClicked][colLabelClicked]) {
+            mission[rowLabelClicked][colLabelClicked].setValue(n);
+            if (mission[rowLabelClicked][colLabelClicked].getValue() == solution[rowLabelClicked][colLabelClicked].getValue()) {
                 labelClicked.setText(String.valueOf(n));
                 otrong--;
             } else {
-                mission[rowLabelClicked][colLabelClicked] = 0;
+                mission[rowLabelClicked][colLabelClicked].setValue(0);
                 err--;
                 labelErr.setText(String.valueOf(err));
             }
             checkStatusGame(e);
             setValue = false;
+            changeTextFill(labelClicked, rowLabelClicked, colLabelClicked);
         }
     }
-
+    // Kiểm tra trạng thái game
     private void checkStatusGame(MouseEvent e) {
         if (otrong == 0) { // win
             System.out.println("win");
@@ -165,7 +134,7 @@ public class GameController implements Initializable {
             try {
                 Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow(); // Lay stage hien tai
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/stateGame/gameWin.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/src/View/GameWin.fxml"));
                 Parent root = loader.load();
                 Scene scene = new Scene(root, 720, 648);
 
@@ -176,13 +145,13 @@ public class GameController implements Initializable {
                 System.out.println("Err: " + err);
             }
         }
-        if (err == 0) { // lose
+        if (err <= 0) { // lose
             System.out.println("lose");
 
             try {
                 Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow(); // Lay stage hien tai
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/stateGame/gameLose.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/src/View/GameLose.fxml"));
                 Parent root = loader.load();
                 Scene scene = new Scene(root, 720, 648);
 
@@ -194,7 +163,7 @@ public class GameController implements Initializable {
             }
         }
     }
-
+    // Đổi màu label khi click
     private void changeTextFill(Label l, int row, int col) {
         if (labelClicked != null) {
 
@@ -227,7 +196,7 @@ public class GameController implements Initializable {
     }
 
     private void fillText(String s, int row, int col) {
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < game.getN(); i++) {
             String name1 = "#arr" + String.valueOf(row) + String.valueOf(i);
             String name2 = "#arr" + String.valueOf(i) + String.valueOf(col);
             arrLabel.get(name1).setStyle(s);
@@ -244,7 +213,6 @@ public class GameController implements Initializable {
     public void setLabelLevel(String s) {
         if (labelLevel != null) {
             labelLevel.setText(s);
-
         }
     }
     public void setLabelErr(int n) {
@@ -257,7 +225,6 @@ public class GameController implements Initializable {
         otrong = n;
         System.out.println(otrong);
     }
-
     public void hoantac(ActionEvent e) {
         System.out.println("Click hoan tac");
     }
@@ -267,24 +234,38 @@ public class GameController implements Initializable {
     public void ghichu(ActionEvent e) {
         System.out.println("Click ghi chu");
     }
-
     public void backtochoselevel(ActionEvent e) {
-        System.out.println("Back to level");
-
-        try {
-            Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow(); // Lay stage hien tai
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/level/level.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root, 720, 648);
-
-            stage.setScene(scene);
-            stage.setTitle("Game Sudoku");
-            stage.show();
-
-        } catch (Exception err) {
-            System.out.println("Err: " + err);
-        }
+        Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+        ChangeScene c = new ChangeScene(stage, "/src/View/Level.fxml");;
+        c.change();
     }
 
+    public NodeGame[][] getSolution() {
+        return solution;
+    }
+
+    public void setSolution(NodeGame[][] solution) {
+        this.solution = solution;
+    }
+
+    public NodeGame[][] getMission() {
+        return mission;
+    }
+
+    public void setMission(NodeGame[][] mission) {
+        this.mission = mission;
+    }
+
+    public int getErr() {
+        return err;
+    }
+
+    public void setErr(int err) {
+        this.err = err;
+    }
+
+    public int getOtrong() {
+        return otrong;
+    }
 }
+

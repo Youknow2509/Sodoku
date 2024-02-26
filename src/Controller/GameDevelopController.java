@@ -1,7 +1,9 @@
 package src.Controller;
 
-import application.assest.SudokuGenerator;
-import application.game.gameControler;
+import src.Model.ChangeScene;
+import src.Model.Game;
+import src.Model.Generator;
+import src.Controller.GameController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -18,8 +20,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import src.Model.NodeGame;
 
-public class GameDevelopController implements Initializable {
+public class GameDevelopController {
 
     @FXML
     private AnchorPane anchorPane;
@@ -29,95 +32,96 @@ public class GameDevelopController implements Initializable {
     private TextField err;
     @FXML
     private Label inputErr;
+    // Biến trong game
+    final Game game = new Game(0);
+    private NodeGame[][] res;
+    private NodeGame[][] mission;
 
-    private SudokuGenerator sg = new SudokuGenerator();
-    private int[][] res = new int[9][9];
-    int nErr;
-    int nOtrong;
-    boolean check1 = false;
-    boolean check2 = false;
+    obj objErr = new obj();
+    obj objOtrong = new obj();
 
+    @FXML
+    public void initialize() {
 
-    @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
-        res = sg.generateSudoku();
+        res = game.getBoardRes();
+        objErr.setT(err);
+        objOtrong.setT(otrong);
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 String name = "#arr" + String.valueOf(i) + String.valueOf(j);
                 Label label = (Label)anchorPane.lookup(name);
-                label.setText(String.valueOf(res[i][j]));
+                label.setText(String.valueOf(res[i][j].getValue()));
             }
         }
     }
     private boolean isNumber(String str) {
         return str.matches("\\d+");
     }
-    private void setErr() {
-        String s = err.getText();
+
+    private void setTextField(obj o) {
+        String s = (o.getT()).getText();
         if (isNumber(s)) {
-            nErr = Integer.parseInt(s);
-            check1 = true;
-        }
-        else {
-            inputErr.setText("Vui lòng nhập đúng định dạng");
-        }
-    }
-    private void setOtrong() {
-        String s = err.getText();
-        if (isNumber(s)) {
-            nOtrong = Integer.parseInt(s);
-            check2 = true;
-        }
-        else {
-            inputErr.setText("Vui lòng nhập đúng định dạng");
+            o.setN(Integer.parseInt(s));
+            o.setB(true);
         }
     }
 
     public void nextToGame(ActionEvent e) {
-        setOtrong();
-        setErr();
-        if (check1 && check2) {
-            try {
-                Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow(); // Lay stage hien tai
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/game/game.fxml"));
-
-                Parent root = loader.load();
-
-                gameControler g = loader.getController();
-                // Xu li yeu cau
-
-                g.load(nOtrong, nErr, "TEST", res);
-
-                Scene scene = new Scene(root, 720, 648);
-
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException err) {
-                err.printStackTrace();
-                System.exit(0);
-            }
+        Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow(); // Lay stage hien tai
+        setTextField(objErr);
+        setTextField(objOtrong);
+        if (objErr.getB() && objOtrong.getB()) {
+            game.initMission(objOtrong.getN());
+            mission = game.getBoardMissing();
+            ChangeScene c = new ChangeScene(stage, "/src/View/Game.fxml");
+            c.change(res, mission, objOtrong.getN(), objErr.getN(), "Develop");
+        } else {
+            inputErr.setText("Vui lòng nhập đúng định dạng");
         }
-
     }
     public void backtolevel(ActionEvent e) {
-        System.out.println("Back to level");
+        Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow(); // Lay stage hien tai
+        ChangeScene c = new ChangeScene(stage, "/src/View/Level.fxml");
+        c.change();
+    }
+}
 
-        try {
-            Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow(); // Lay stage hien tai
+class obj {
+    private boolean b = false;
+    private int n;
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/level/level.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root, 720, 648);
+    private TextField t;
 
-            stage.setScene(scene);
-            stage.setTitle("Game Sudoku");
-            stage.show();
+    public obj(boolean b, int text, TextField t) {
+        this.b = b;
+        this.n = text;
+    }
 
-        } catch (Exception err) {
-            System.out.println("Err: " + err);
-        }
+    public obj() {
+    }
+
+    public boolean getB() {
+        return b;
+    }
+
+    public void setB(boolean b) {
+        this.b = b;
+    }
+
+    public int getN() {
+        return n;
+    }
+
+    public void setN(int n) {
+        this.n = n;
+    }
+
+    public TextField getT() {
+        return t;
+    }
+
+    public void setT(TextField t) {
+        this.t = t;
     }
 }

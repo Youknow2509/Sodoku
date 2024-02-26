@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="648.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.">
+<AnchorPane fx:id="anchorPane" prefHeight="648.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.Controller.GameDevelopController">
     <children>
         <Label layoutX="58.0" layoutY="487.0" prefHeight="44.0" prefWidth="215.0" text="Chọn số ô trống: " textFill="#f20b0b">
             <font>

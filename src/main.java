@@ -1,5 +1,8 @@
 package src;
 
+import src.Controller.GameController;
+import src.Model.ChangeScene;
+import src.Model.Game;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,21 +13,9 @@ public class main extends Application {
 
     @Override
     public void start(Stage primaryStage){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/MainGame.fxml"));
-            Parent root = loader.load();
-
-            Scene scene = new Scene(root, 720, 648); // 3840, 2160 | 720, 648 | 1080, 972 | 1920, 1080
-
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("Game Sudoku");
-            primaryStage.show();
-
-        } catch (Exception e) {
-            System.out.println("Err: " + e);
-            System.exit(0);
-        }
-
+        System.out.println("Start Game");
+        ChangeScene c = new ChangeScene(primaryStage, "/src/View/MainGame.fxml");
+        c.change();
     }
 
     public static void main(String[] args) {

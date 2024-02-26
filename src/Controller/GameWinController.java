@@ -5,26 +5,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import src.Model.ChangeScene;
 
 public class GameWinController {
 
     public void backtolevel(ActionEvent e) {
-        System.out.println("Back to level");
-
-        try {
-            Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow(); // Lay stage hien tai
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/level/level.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root, 720, 648);
-
-            stage.setScene(scene);
-            stage.setTitle("Game Sudoku");
-            stage.show();
-
-        } catch (Exception err) {
-            System.out.println("Err: " + err);
-        }
+        Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow(); // Lay stage hien tai
+        ChangeScene c = new ChangeScene(stage, "/src/View/level/level.fxml");
+        c.change();
     }
 
     public void exitGame(ActionEvent e) {

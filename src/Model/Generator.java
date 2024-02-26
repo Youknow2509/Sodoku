@@ -3,26 +3,46 @@ package src.Model;
 import java.util.Random;
 
 public class Generator {
-    private final int size = 9;
+    private int size = 9;
     final Validate validate = new Validate();
-    public int[][] GeneratorGame() {
-        int[][] arr = new int[size][size];
+
+    public Generator() {
+        super();
+    }
+    public Generator(int size) {
+        super();
+        this.size = size;
+    }
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+    public NodeGame [][] GeneratorGame() {
+        NodeGame [][] arr = new NodeGame [size][size];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                arr[i][j] = new NodeGame(i, j, 0);
+            }
+        }
         fillValues(arr);
         return arr;
     }
     // Điền giá trị vào các ô trong mảng
-    private void fillValues(int[][] arr) {
+    private void fillValues(NodeGame [][] arr) {
         fillDiagonal(arr); // Điền giá trị vào các ô đường chéo
         fillRemaining(arr, 0, 3);
         // removeDigits(arr, countRm); // Điều chỉnh số lượng chữ số còn lại
     }
 
-    private void fillDiagonal(int[][] arr) {
-        for (int i = 0; i < 9; i = i + 3)
+    private void fillDiagonal(NodeGame [][] arr) {
+        for (int i = 0; i < size; i = i + 3)
             fillBox(arr, i, i);
     }
 
-    private void fillBox(int[][] arr, int row, int col) {
+    private void fillBox(NodeGame [][] arr, int row, int col) {
         int num;
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 3; j++) {
@@ -30,7 +50,8 @@ public class Generator {
                     num = randomGenerator(9);
                 } while (!validate.ValidateBox(arr, row, col, num));
 
-                arr[row + i][col + j] = num;
+                arr[row + i][col + j] = new NodeGame(row + i, col + j, num);
+
             }
     }
 
@@ -39,46 +60,50 @@ public class Generator {
         return random.nextInt(num) + 1;
     }
     // Xử dụng thuật toán quay lui để điền đầy đủ các giá trị vào ô còn trống
-    private boolean fillRemaining(int[][] arr, int i, int j) {
-        if (i == 8 && j == 9)
+    private boolean fillRemaining(NodeGame [][] arr, int i, int j) {
+        if (i == size - 1 && j == size)
             return true;
-        if (j == 9) {
+        if (j == size) {
             i++;
             j = 0;
         }
-        if (arr[i][j] != 0)
+        if (arr[i][j].getValue() != 0)
             return fillRemaining(arr, i, j + 1);
 
-        for (int num = 1; num <= 9; num++) {
-            if (validate.ValidateSafe(arr, i, j, num)) {
-                arr[i][j] = num;
+        for (int num = 1; num <= size; num++) {
+            NodeGame t = new NodeGame(i, j, num);
+            if (validate.ValidateSafe(arr, t)) {
+                arr[i][j] = t;
                 if (fillRemaining(arr, i, j + 1)) {
                     return true;
                 }
-                arr[i][j] = 0;
+                arr[i][j] = new NodeGame (i, j, 0);
             }
         }
         return false;
     }
     // Coppy array 2d
-    public int[][] coppyArray2d(int[][] arr) {
-        int[][] arrCopy = new int[size][size];
+    public NodeGame [][] coppyArray2d(NodeGame [][] arr) {
+        NodeGame [][] arrCopy = new NodeGame [size][size];
         for (int i = 0; i < size; i++) {
-            System.arraycopy(arr[i], 0, arrCopy[i], 0, size);
+            for (int j = 0; j < size; j++) {
+                arrCopy[i][j] = new NodeGame(i, j, arr[i][j].getValue());
+            }
         }
         return arrCopy;
     }
     // remove digits
-    public void removeDigits(int[][] arr, int countRm) {
+    public void removeDigits(NodeGame [][] arr, int countRm) {
         int count = 0;
         while (count < countRm) {
-            int cellId = randomGenerator(81) - 1;
-            int i = cellId / 9;
-            int j = cellId % 9;
-            if (arr[i][j] != 0) {
+            int cellId = randomGenerator(size*size) - 1;
+            int i = cellId / size;
+            int j = cellId % size;
+            if (arr[i][j].getValue() != 0) {
                 count++;
-                arr[i][j] = 0;
+                arr[i][j].setValue(0);
             }
         }
     }
+
 }

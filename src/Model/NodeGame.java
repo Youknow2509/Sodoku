@@ -1,20 +1,20 @@
 package src.Model;
 
-public class Node {
+public class NodeGame {
     // Attributes
-    private int x;
-    private int y;
-    private int value;
+    private int x = 0;
+    private int y = 0;
+    private int value = 0;
     // Constructor
-
-    public Node(int x, int y, int value) {
+    public NodeGame() {
+        super();
+    }
+    public NodeGame(int y, int x, int value) {
         this.x = x;
         this.y = y;
         this.value = value;
     }
-    public Node() {
-        super();
-    }
+
     // Getters and Setters
     public int getX() {
         return x;
