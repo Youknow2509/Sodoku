@@ -1,7 +1,5 @@
 package src.Model;
 
-import src.View.ShowArray2d;
-
 public class Game {
     // Attributes
     private NodeGame [][] boardRes;
@@ -9,7 +7,6 @@ public class Game {
 
     private int n;
     private final Generator generator = new Generator();
-    private final ShowArray2d showArray2D = new ShowArray2d();
 
     // Constructor
     public Game() {
@@ -43,11 +40,6 @@ public class Game {
     public void setN(int n) {
         this.n = n;
     }
-
-    public void show() {
-        showArray2D.show(boardMission);
-    }
-
     public void initMission(int n) {
         boardMission = generator.coppyArray2d(boardRes);
         generator.removeDigits(boardMission, n);

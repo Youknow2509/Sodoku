@@ -4,7 +4,7 @@ public class Validate {
     public boolean ValidateSafe(NodeGame [][] arr, NodeGame n) {
         return ValidateRow(arr, n.getY(), n.getValue()) &&
                 ValidateCol(arr, n.getX(), n.getValue()) &&
-                ValidateBox(arr, n.getY() - n.getY() % 3, n.getX() - n.getX() % 3, n.getValue());
+                ValidateBox(arr, n.getY() - n.getY() % Generator.getSizeBox(), n.getX() - n.getX() % Generator.getSizeBox(), n.getValue());
     }
     // Ham kiem tra hang
     public static boolean ValidateRow(NodeGame [][] arr, int row, int val) {
@@ -26,8 +26,8 @@ public class Validate {
     }
     // Ham kiem tra mot nhom
     public static boolean ValidateBox(NodeGame [][] arr, int rowStart, int colStart, int val) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < Generator.getSizeBox(); i++) {
+            for (int j = 0; j < Generator.getSizeBox(); j++) {
                 if (arr[rowStart + i][colStart + j].getValue() == val) {
                     return false;
                 }

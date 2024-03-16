@@ -3,22 +3,17 @@ package src.Model;
 import java.util.Random;
 
 public class Generator {
-    private int size = 9;
+    private static int size = 9;
+    private static int sizeBox = 3;
     final Validate validate = new Validate();
 
     public Generator() {
         super();
     }
-    public Generator(int size) {
+    public Generator(int s) {
         super();
-        this.size = size;
-    }
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
+        size = s;
+        sizeBox = (int) Math.sqrt(size);
     }
     public NodeGame [][] GeneratorGame() {
         NodeGame [][] arr = new NodeGame [size][size];
@@ -33,21 +28,21 @@ public class Generator {
     // Điền giá trị vào các ô trong mảng
     private void fillValues(NodeGame [][] arr) {
         fillDiagonal(arr); // Điền giá trị vào các ô đường chéo
-        fillRemaining(arr, 0, 3);
+        fillRemaining(arr, 0, sizeBox);
         // removeDigits(arr, countRm); // Điều chỉnh số lượng chữ số còn lại
     }
 
     private void fillDiagonal(NodeGame [][] arr) {
-        for (int i = 0; i < size; i = i + 3)
+        for (int i = 0; i < size; i = i + sizeBox)
             fillBox(arr, i, i);
     }
 
     private void fillBox(NodeGame [][] arr, int row, int col) {
         int num;
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < sizeBox; i++)
+            for (int j = 0; j < sizeBox; j++) {
                 do {
-                    num = randomGenerator(9);
+                    num = randomGenerator(size);
                 } while (!validate.ValidateBox(arr, row, col, num));
 
                 arr[row + i][col + j] = new NodeGame(row + i, col + j, num);
@@ -106,4 +101,16 @@ public class Generator {
         }
     }
 
+    public static int getSize() {
+        return size;
+    }
+
+    public static void setSize(int s) { size = s;}
+    public static int getSizeBox() {
+        return sizeBox;
+    }
+
+    public static void setSizeBox(int sizeBox) {
+        Generator.sizeBox = sizeBox;
+    }
 }

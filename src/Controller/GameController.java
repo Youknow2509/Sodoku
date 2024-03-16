@@ -1,7 +1,7 @@
 package src.Controller;
 
 import src.Model.ChangeScene;
-import src.Model.Game;
+import src.Model.Generator;
 import src.Model.NodeGame;
 
 import java.util.HashMap;
@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import src.Model.Game;
 
 public class GameController {
 
@@ -196,7 +197,7 @@ public class GameController {
     }
 
     private void fillText(String s, int row, int col) {
-        for (int i = 0; i < game.getN(); i++) {
+        for (int i = 0; i < Generator.getSize(); i++) {
             String name1 = "#arr" + String.valueOf(row) + String.valueOf(i);
             String name2 = "#arr" + String.valueOf(i) + String.valueOf(col);
             arrLabel.get(name1).setStyle(s);

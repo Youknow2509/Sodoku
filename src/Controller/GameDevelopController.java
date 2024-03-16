@@ -1,26 +1,17 @@
 package src.Controller;
 
 import src.Model.ChangeScene;
-import src.Model.Game;
-import src.Model.Generator;
-import src.Controller.GameController;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import src.Model.Generator;
 import src.Model.NodeGame;
+import src.Model.Game;
 
 public class GameDevelopController {
 
@@ -47,8 +38,8 @@ public class GameDevelopController {
         objErr.setT(err);
         objOtrong.setT(otrong);
 
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
+        for (int i = 0; i < Generator.getSize(); i++) {
+            for (int j = 0; j < Generator.getSize(); j++) {
                 String name = "#arr" + String.valueOf(i) + String.valueOf(j);
                 Label label = (Label)anchorPane.lookup(name);
                 label.setText(String.valueOf(res[i][j].getValue()));
