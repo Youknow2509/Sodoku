@@ -8,7 +8,7 @@ public class Game {
     private NodeGame [][] boardMission;
 
     private int n;
-    private final Generator generator = new Generator();
+    private final Generator generator = new Generator(9);
     private final ShowArray2d showArray2D = new ShowArray2d();
 
     // Constructor
@@ -52,7 +52,6 @@ public class Game {
         boardMission = generator.coppyArray2d(boardRes);
         generator.removeDigits(boardMission, n);
     }
-
     public void initData(int n) {
         boardRes = generator.GeneratorGame();
         initMission(n);

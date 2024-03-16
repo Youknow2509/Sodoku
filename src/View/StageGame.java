@@ -1,30 +1,24 @@
 package src.View;
 
-import src.Controller.GameTest;
-import src.Model.Game;
-
-import java.util.Scanner;
+import src.Controller.GameController;
 
 public class StageGame {
 
     public void stage() {
-        System.out.println("So lan sai con lai: " + GameTest.c + "\nSo o trong con lai: " + GameTest.otrong);
+        System.out.println("So lan sai con lai: " + GameController.c + "\nSo o trong con lai: " + GameController.otrong);
     }
-    public void inputRC(Scanner input) {
+    public void inputRC() {
         System.out.print("Nhap toa do x, y: ");
-        GameTest.x = input.nextInt();
-        GameTest.y = input.nextInt();
     }
-    public void inputV(Scanner input) {
+    public void inputV() {
         System.out.print("Nhap gia tri: ");
-        GameTest.value = input.nextInt();
     }
     public void gameWin() {
         System.out.println("Win!");
     }
     public void gameOver() {
         System.out.println("Game Over!");
-        GameTest.g = false;
+        GameController.g = false;
         System.exit(0);
     }
 }

@@ -1,11 +1,12 @@
 package src.Example;
 
-import src.Controller.GameTest;
+import src.Controller.GameController;
+import src.Model.InputException;
 
 public class Test {
 
     public static void main(String[] args) {
-        GameTest game = new GameTest();
+        GameController game = new GameController();
         game.run();
     }
 }
