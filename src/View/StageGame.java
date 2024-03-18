@@ -7,9 +7,13 @@ public class StageGame {
     public void stage() {
         System.out.println("So lan sai con lai: " + GameController.c + "\nSo o trong con lai: " + GameController.otrong);
     }
-    public void inputRC() {
-        System.out.print("Nhap toa do x, y: ");
+    public void inputR() {
+        System.out.print("Nhap toa do x: ");
     }
+    public void inputC() {
+        System.out.print("Nhap toa do y: ");
+    }
+
     public void inputV() {
         System.out.print("Nhap gia tri: ");
     }

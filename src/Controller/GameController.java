@@ -7,6 +7,9 @@ import src.Model.Validate;
 import src.View.ClearScreen;
 import src.View.ShowArray2d;
 import src.View.StageGame;
+
+import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import src.Model.InputException;
 
@@ -47,13 +50,18 @@ public class GameController {
             showArray2D.show(arr);
             stageGame.stage();
 
-            nhapHangCot();
-            nhapGiatri();
-            if (validate.ValidateSafe(arr, new NodeGame(x, y, value))) {
-                arr[x][y].setValue(value);
-                otrong--;
+            nhapHang();
+            nhapCot();
+            if (arr[x][y].getValue() == 0) {
+                nhapGiatri();
+                if (validate.ValidateSafe(arr, new NodeGame(x, y, value))) {
+                    arr[x][y].setValue(value);
+                    otrong--;
+                } else {
+                    c--;
+                }
             } else {
-                c--;
+                System.out.println("Hay chon dung vi tri trong");
             }
             if (otrong == 0) {
                 stageGame.gameWin();
@@ -67,17 +75,37 @@ public class GameController {
         input.close();
         return;
     }
-    private void nhapHangCot() {
-        stageGame.inputRC();
+    private void nhapHang() {
+        stageGame.inputR();
         try {
             x = input.nextInt();
+
+            if (x < 0 || x >= size || y < 0 || y >= size) {
+                throw new InputException("Vui long nhap toa do trong khoang 0 den " + (size - 1));
+            }
+        } catch (InputException e) {
+            System.out.println(e.getMessage());
+            nhapHang();
+        } catch (InputMismatchException e) {
+            System.out.println("Vui lòng nhập số nguyên.");
+            input.nextLine(); // Xóa dòng không hợp lệ khỏi input
+            nhapHang();
+        }
+    }
+    private void nhapCot() {
+        stageGame.inputC();
+        try {
             y = input.nextInt();
             if (x < 0 || x >= size || y < 0 || y >= size) {
                 throw new InputException("Vui long nhap toa do trong khoang 0 den " + (size - 1));
             }
         } catch (InputException e) {
             System.out.println(e.getMessage());
-            nhapHangCot();
+            nhapCot();
+        } catch (InputMismatchException e) {
+            System.out.println("Vui lòng nhập số nguyên.");
+            input.nextLine(); // Xóa dòng không hợp lệ khỏi input
+            nhapCot();
         }
     }
     private void nhapGiatri() {
@@ -89,6 +117,10 @@ public class GameController {
             }
         } catch (InputException e) {
             System.out.println(e.getMessage());
+            nhapGiatri();
+        } catch (InputMismatchException e) {
+            System.out.println("Vui lòng nhập số nguyên.");
+            input.nextLine(); // Xóa dòng không hợp lệ khỏi input
             nhapGiatri();
         }
     }

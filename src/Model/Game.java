@@ -8,7 +8,7 @@ public class Game {
     private NodeGame [][] boardMission;
 
     private int n;
-    private final Generator generator = new Generator(9);
+    private final Generator generator = new Generator();
     private final ShowArray2d showArray2D = new ShowArray2d();
 
     // Constructor
