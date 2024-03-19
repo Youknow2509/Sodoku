@@ -1,61 +1,58 @@
 package src.Model;
 
+import src.Data.DataLoad;
 import src.View.ShowArray2d;
 
 public class Game {
     // Attributes
-    private NodeGame [][] boardRes;
-    private NodeGame [][] boardMission;
-
-    private int n;
-    private final Generator generator = new Generator();
+    private static NodeGame [][] boardRes;
+    private static int size;
+    private static int sizeBox;
+    private static int otrong;
     private final ShowArray2d showArray2D = new ShowArray2d();
-
+    private final DataLoad dataLoad = new DataLoad();
     // Constructor
     public Game() {
+        dataLoad.load("src/Data/Game/g1/Ez/1.txt");
+        otrong = 10;
+        boardRes = dataLoad.getArr();
+        size = dataLoad.getSize();
+        sizeBox = dataLoad.getSizeBox();
     }
     public Game(int n) {
-        initData(n);
+
     }
 
     // Getters and Setters
-
-    public NodeGame[][] getBoardRes() {
+    public static NodeGame[][] getBoardRes() {
         return boardRes;
     }
 
-    public void setBoardRes(NodeGame[][] boardRes) {
-        this.boardRes = boardRes;
+    public static void setBoardRes(NodeGame[][] b) {
+        boardRes = b;
     }
 
-    public NodeGame[][] getBoardMissing() {
-        return boardMission;
+    public static int getSize() {
+        return size;
     }
 
-    public void setBoardMissing(NodeGame[][] boardMissing) {
-        this.boardMission = boardMissing;
+    public static void setSize(int size) {
+        Game.size = size;
     }
 
-    public int getN() {
-        return n;
+    public static int getSizeBox() {
+        return sizeBox;
     }
 
-    public void setN(int n) {
-        this.n = n;
+    public static void setSizeBox(int sizeBox) {
+        Game.sizeBox = sizeBox;
     }
 
-    public void show() {
-        showArray2D.show(boardMission);
+    public static int getOtrong() {
+        return otrong;
     }
 
-    public void initMission(int n) {
-        boardMission = generator.coppyArray2d(boardRes);
-        generator.removeDigits(boardMission, n);
+    public static void setOtrong(int otrong) {
+        Game.otrong = otrong;
     }
-    public void initData(int n) {
-        boardRes = generator.GeneratorGame();
-        initMission(n);
-        this.n = n;
-    }
-
 }

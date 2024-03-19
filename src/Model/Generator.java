@@ -5,6 +5,7 @@ import java.util.Random;
 public class Generator {
     private static int size = 9;
     private static int  sizeBox = 3;
+    private NodeGame [][] arr = null;
     final Validate validate = new Validate();
 
     public Generator() {
@@ -28,28 +29,28 @@ public class Generator {
         size = s;
     }
     public NodeGame [][] GeneratorGame() {
-        NodeGame [][] arr = new NodeGame [size][size];
+        arr = new NodeGame [size][size];
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 arr[i][j] = new NodeGame(i, j, 0);
             }
         }
-        fillValues(arr);
+        fillValues();
         return arr;
     }
     // Điền giá trị vào các ô trong mảng
-    private void fillValues(NodeGame [][] arr) {
-        fillDiagonal(arr); // Điền giá trị vào các ô đường chéo
-        fillRemaining(arr, 0, sizeBox);
+    private void fillValues() {
+        fillDiagonal(); // Điền giá trị vào các ô đường chéo
+        fillRemaining(0, sizeBox);
         // removeDigits(arr, countRm); // Điều chỉnh số lượng chữ số còn lại
     }
 
-    private void fillDiagonal(NodeGame [][] arr) {
+    private void fillDiagonal() {
         for (int i = 0; i < size; i = i + sizeBox)
-            fillBox(arr, i, i);
+            fillBox(i, i);
     }
 
-    private void fillBox(NodeGame [][] arr, int row, int col) {
+    private void fillBox(int row, int col) {
         int num;
         for (int i = 0; i < sizeBox; i++)
             for (int j = 0; j < sizeBox; j++) {
@@ -67,7 +68,7 @@ public class Generator {
         return random.nextInt(num) + 1;
     }
     // Xử dụng thuật toán quay lui để điền đầy đủ các giá trị vào ô còn trống
-    private boolean fillRemaining(NodeGame [][] arr, int i, int j) {
+    private boolean fillRemaining(int i, int j) {
         if (i == size - 1 && j == size)
             return true;
         if (j == size) {
@@ -75,13 +76,13 @@ public class Generator {
             j = 0;
         }
         if (arr[i][j].getValue() != 0)
-            return fillRemaining(arr, i, j + 1);
+            return fillRemaining(i, j + 1);
 
         for (int num = 1; num <= size; num++) {
             NodeGame t = new NodeGame(i, j, num);
             if (validate.ValidateSafe(arr, t)) {
                 arr[i][j] = t;
-                if (fillRemaining(arr, i, j + 1)) {
+                if (fillRemaining(i, j + 1)) {
                     return true;
                 }
                 arr[i][j] = new NodeGame (i, j, 0);
@@ -90,7 +91,7 @@ public class Generator {
         return false;
     }
     // Coppy array 2d
-    public NodeGame [][] coppyArray2d(NodeGame [][] arr) {
+    public NodeGame [][] coppyArray2d() {
         NodeGame [][] arrCopy = new NodeGame [size][size];
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -100,7 +101,7 @@ public class Generator {
         return arrCopy;
     }
     // remove digits
-    public void removeDigits(NodeGame [][] arr, int countRm) {
+    public void removeDigits(int countRm) {
         int count = 0;
         while (count < countRm) {
             int cellId = randomGenerator(size*size) - 1;

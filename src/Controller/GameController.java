@@ -27,24 +27,13 @@ public class GameController {
     public static int c = 3;
     private int size = 9;
     public int x, y, value; // Toa do va gia tri nhap vao
-    public GameController(int o, int err, int s) {
-        otrong = o;
-        c = err;
-        size = s;
-    }
+
     public GameController() {
-        this.otrong = 10;
-        size = 9;
-    }
-    private boolean checkLocation(NodeGame [][] arr, int x, int y) {
-        if (x >= 0 && x <= (size - 1) && y >= 0 && y <= (size - 1) && arr[x][y].getValue() == 0) {
-            return true;
-        }
-        return false;
+        otrong = Game.getOtrong();
+        size = Game.getSize();
     }
     public void run() {
-        game.initData(otrong);
-        NodeGame [][] arr = game.getBoardMissing();
+        NodeGame [][] arr = Game.getBoardRes();
         while (g && c > 0 && otrong > 0) {
             clearScreen.run();
             showArray2D.show(arr);
@@ -88,8 +77,15 @@ public class GameController {
             nhapHang();
         } catch (InputMismatchException e) {
             System.out.println("Vui lòng nhập số nguyên.");
-            input.nextLine(); // Xóa dòng không hợp lệ khỏi input
-            nhapHang();
+            String ip = input.nextLine();
+            if (ip.equals("menu")) { // input.nextLine(); // Xóa dòng không hợp lệ khỏi input
+                System.out.println("Ban da chon menu");
+            } else if (ip.equals("q")) {
+                System.out.println("Ban da chon thoat");
+                System.exit(0);
+            } else{
+                nhapHang();
+            }
         }
     }
     private void nhapCot() {
@@ -104,8 +100,15 @@ public class GameController {
             nhapCot();
         } catch (InputMismatchException e) {
             System.out.println("Vui lòng nhập số nguyên.");
-            input.nextLine(); // Xóa dòng không hợp lệ khỏi input
-            nhapCot();
+            String ip = input.nextLine();
+            if (ip.equals("menu")) { // input.nextLine(); // Xóa dòng không hợp lệ khỏi input
+                System.out.println("Ban da chon menu");
+            } else if (ip.equals("q")) {
+                System.out.println("Ban da chon thoat");
+                System.exit(0);
+            } else{
+                nhapCot();
+            }
         }
     }
     private void nhapGiatri() {
@@ -120,8 +123,15 @@ public class GameController {
             nhapGiatri();
         } catch (InputMismatchException e) {
             System.out.println("Vui lòng nhập số nguyên.");
-            input.nextLine(); // Xóa dòng không hợp lệ khỏi input
-            nhapGiatri();
+            String ip = input.nextLine();
+            if (ip.equals("menu")) { // input.nextLine(); // Xóa dòng không hợp lệ khỏi input
+                System.out.println("Ban da chon menu");
+            } else if (ip.equals("q")) {
+                System.out.println("Ban da chon thoat");
+                System.exit(0);
+            } else{
+                nhapGiatri();
+            }
         }
     }
 }
