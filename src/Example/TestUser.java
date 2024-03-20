@@ -10,8 +10,11 @@ import java.util.*;
 public class TestUser {
     private static Map<String, ArrayList<String>> DATA = new Hashtable<String, ArrayList<String>>();
     private static String pathRoot = "src/Data/UserTemp";
-    // Đọc dữ liệu
-    private static void readData(String path) {
+    private static NodeGame [][] lNodeGame = null;
+    private int otorng = 0;
+    private int luotsai = 0;
+    // Quét Folder
+    private static void readFolder(String path) {
         File file = new File(path);
         if (file.isDirectory()) {
             File [] lFiles = file.listFiles();
@@ -162,6 +165,30 @@ public class TestUser {
         res += otorng + " " + luotsai;
         return res;
     }
+    // Đọc dữ liệu từ file
+    private static void readData(String path) {
+        BufferedReader bf = null;
+        FileReader fr = null;
+        try {
+            fr = new FileReader(path);
+            bf = new BufferedReader(fr);
+            // TODO viet tiep
+            String line = bf.readLine();
+            String [] lLine = line.split(" ");
+
+            int size = line.length();
+            lNodeGame = new NodeGame[size][size];
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                bf.close();
+                fr.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public static void main(String[] args) {
         runTest();
     }
@@ -171,7 +198,7 @@ public class TestUser {
         Scanner scanner = new Scanner(System.in);
         Boolean loop = true;
         while (loop) {
-            readData(pathRoot);
+            readFolder(pathRoot);
             printData();
             System.out.println("1. Create User.");
             System.out.println("2. Delete User.");
