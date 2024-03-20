@@ -20,7 +20,8 @@ public class Game {
         sizeBox = dataLoad.getSizeBox();
     }
     public Game(int n) {
-
+        size = n;
+        sizeBox = (int)Math.sqrt(n);
     }
 
     // Getters and Setters

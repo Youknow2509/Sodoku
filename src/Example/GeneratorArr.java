@@ -1,5 +1,6 @@
 package src.Example;
 
+import src.Model.Game;
 import src.Model.Generator;
 import src.Model.NodeGame;
 import src.View.ShowArray2d;
@@ -14,9 +15,11 @@ public class GeneratorArr {
         }
     }
     public static void main(String[] args) {
-        Generator generator = new Generator(16);
+        int size = 9;
+        Generator generator = new Generator(size);
+        Game game = new Game(size); // Khởi tạo game vì bị liên quan biến static
         NodeGame[][] arr = generator.GeneratorGame();
-        generator.removeDigits(30); // TODO Điền hết gía trị cho database
+        generator.removeDigits(5); // TODO Điền hết gía trị cho database
         show(arr);
         return;
     }
