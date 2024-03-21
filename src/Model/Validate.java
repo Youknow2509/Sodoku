@@ -1,34 +1,47 @@
 package src.Model;
 
 public class Validate {
-    public boolean ValidateSafe(NodeGame [][] arr, NodeGame n) {
-        return ValidateRow(arr, n.getY(), n.getValue()) &&
-                ValidateCol(arr, n.getX(), n.getValue()) &&
-                ValidateBox(arr, n.getY() - n.getY() % Game.getSizeBox(), n.getX() - n.getX() % Game.getSizeBox(), n.getValue());
+    // Var
+    private Game game = null;
+    // Constructor
+    public Validate() {
+        super();
+    }
+    public Validate(Game g) {
+        game = g;
+    }
+    // Ham kiem tra xem gia tri co hop le khong
+    public boolean ValidateSafe(NodeGame n) {
+        int x = n.getX();
+        int y = n.getY();
+        int val = n.getValue();
+        return ValidateRow(y, val) &&
+                ValidateCol(x, val) &&
+                ValidateBox(y - y % game.getSizeBox(), x - x % game.getSizeBox(), val);
     }
     // Ham kiem tra hang
-    public static boolean ValidateRow(NodeGame [][] arr, int row, int val) {
-        for (int j = 0; j < Game.getSize(); j++) {
-            if (arr[row][j].getValue() == val) {
+    public boolean ValidateRow(int row, int val) {
+        for (int j = 0; j < game.getSize(); j++) {
+            if ((game.getListNodeGame())[row][j].getValue() == val) {
                 return false;
             }
         }
         return true;
     }
     // Ham kiem tra cot
-    public static boolean ValidateCol(NodeGame [][] arr, int col, int val) {
-        for (int i = 0; i < Game.getSize(); i++) {
-            if (arr[i][col].getValue() == val) {
+    public boolean ValidateCol(int col, int val) {
+        for (int i = 0; i < game.getSize(); i++) {
+            if ((game.getListNodeGame())[i][col].getValue() == val) {
                 return false;
             }
         }
         return true;
     }
     // Ham kiem tra mot nhom
-    public static boolean ValidateBox(NodeGame [][] arr, int rowStart, int colStart, int val) {
-        for (int i = 0; i < Game.getSizeBox(); i++) {
-            for (int j = 0; j < Game.getSizeBox(); j++) {
-                if (arr[rowStart + i][colStart + j].getValue() == val) {
+    public boolean ValidateBox(int rowStart, int colStart, int val) {
+        for (int i = 0; i < game.getSizeBox(); i++) {
+            for (int j = 0; j < game.getSizeBox(); j++) {
+                if ((game.getListNodeGame())[rowStart + i][colStart + j].getValue() == val) {
                     return false;
                 }
             }

@@ -1,59 +1,68 @@
 package src.Model;
 
-import src.Data.DataLoad;
-import src.View.ShowArray2d;
+import java.io.Serializable;
 
-public class Game {
+public class Game implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     // Attributes
-    private static NodeGame [][] boardRes;
-    private static int size;
-    private static int sizeBox;
-    private static int otrong;
-    private final ShowArray2d showArray2D = new ShowArray2d();
-    private final DataLoad dataLoad = new DataLoad();
+    private NodeGame [][] listNodeGame = null;
+    private int size = 0;
+    private int sizeBox = 0;
+    private int otrong = 0;
+    private int luotsai = 0;
     // Constructor
     public Game() {
-        dataLoad.load("src/Data/Game/g1/Ez/1.txt");
-        otrong = 10;
-        boardRes = dataLoad.getArr();
-        size = dataLoad.getSize();
-        sizeBox = dataLoad.getSizeBox();
+        super();
     }
-    public Game(int n) {
-        size = n;
-        sizeBox = (int)Math.sqrt(n);
+    public Game(NodeGame [][] listNodeGame, int size, int sizeBox, int otrong, int luotsai) {
+        super();
+        this.listNodeGame = listNodeGame;
+        this.size = size;
+        this.sizeBox = sizeBox;
+        this.otrong = otrong;
+        this.luotsai = luotsai;
     }
-
     // Getters and Setters
-    public static NodeGame[][] getBoardRes() {
-        return boardRes;
+    public NodeGame [][] getListNodeGame() {
+        return listNodeGame;
     }
-
-    public static void setBoardRes(NodeGame[][] b) {
-        boardRes = b;
+    public void setListNodeGame(NodeGame [][] listNodeGame) {
+        this.listNodeGame = listNodeGame;
     }
-
-    public static int getSize() {
+    public int getSize() {
         return size;
     }
-
-    public static void setSize(int size) {
-        Game.size = size;
+    public void setSize(int size) {
+        this.size = size;
     }
-
-    public static int getSizeBox() {
+    public int getSizeBox() {
         return sizeBox;
     }
-
-    public static void setSizeBox(int sizeBox) {
-        Game.sizeBox = sizeBox;
+    public void setSizeBox(int sizeBox) {
+        this.sizeBox = sizeBox;
     }
-
-    public static int getOtrong() {
+    public int getOtrong() {
         return otrong;
     }
-
-    public static void setOtrong(int otrong) {
-        Game.otrong = otrong;
+    public void setOtrong(int otrong) {
+        this.otrong = otrong;
+    }
+    public int getLuotsai() {
+        return luotsai;
+    }
+    public void setLuotsai(int luotsai) {
+        this.luotsai = luotsai;
+    }
+    // To String
+    @Override
+    public String toString() {
+        return "Game{" +
+                "listNodeGame=" + listNodeGame +
+                ", size=" + size +
+                ", sizeBox=" + sizeBox +
+                ", otrong=" + otrong +
+                ", luotsai=" + luotsai +
+                '}';
     }
 }

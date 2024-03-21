@@ -1,6 +1,8 @@
 package src.Model;
 
-public class NodeGame {
+import java.io.Serializable;
+
+public class NodeGame implements Serializable {
     // Attributes
     private int x = 0;
     private int y = 0;
@@ -14,7 +16,6 @@ public class NodeGame {
         this.y = y;
         this.value = value;
     }
-
     // Getters and Setters
     public int getX() {
         return x;
@@ -34,7 +35,7 @@ public class NodeGame {
     public void setValue(int value) {
         this.value = value;
     }
-
+    // To String
     @Override
     public String toString() {
         return "Node{" +
