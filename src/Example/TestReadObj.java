@@ -8,7 +8,7 @@ import java.io.ObjectInputStream;
 
 public class TestReadObj {
     public static void main(String[] args) {
-        String path = "src/Data/UserTemp/v/9.txt";
+        String path = "/Users/v/code/java/projects/sudoku/src/Data/UserTemp/v/test.txt";
         FileInputStream fis = null;
         ObjectInputStream ois = null;
         ShowGame showGame = null;

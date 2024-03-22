@@ -16,6 +16,7 @@ public class TestUser {
     private static String pathRoot = "src/Data/UserTemp";
     private static Game game = null;
     private static ShowGame showGame = null;
+    private static GeneratorGame generatorGame = null;
 
 
     // Quét Folder
@@ -139,13 +140,13 @@ public class TestUser {
         }
     }
     // Truyền dữ liệu vào file
-    private static void writeData(String path, Game game) {
+    private static void writeData(String path, Game g) {
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
         try {
             fos = new FileOutputStream(path);
             oos = new ObjectOutputStream(fos);
-            oos.writeObject(game);
+            oos.writeObject(g);
         } catch (NotSerializableException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -164,13 +165,14 @@ public class TestUser {
         }
     }
     // Đọc dữ liệu từ file
-    private static void readData(String path) {
+    private static Game readData(String path) {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
+        Game g = null;
         try {
             fis = new FileInputStream(path);
             ois = new ObjectInputStream(fis);
-            game = (Game) ois.readObject();
+            g = (Game) ois.readObject();
         } catch (EOFException e) {
             System.out.println("Het file.");
             e.printStackTrace();
@@ -195,24 +197,36 @@ public class TestUser {
                 e.printStackTrace();
             }
         }
+        return g;
     }
     public static void main(String[] args) {
+        //String path = "src/Data/UserTemp/v/test.txt";
+        //GeneratorGame generatorGame = new GeneratorGame(9, 3, 12, 3);
+        //showGame = new ShowGame(generatorGame.getGame());
+        //writeData("src/Data/UserTemp/v/test.txt", generatorGame.getGame());
+        //showGame = new ShowGame(readData(path));
+        //showGame.show();
         runTest();
     }
     private static void runTest() {
         System.out.println();
+
         String input = "";
+
         String path = "";
-        String typeGame = "";
+
         String user = "";
+
+        String typeGame = "";
         String nameFile = "";
+
         String size = "";
         String oTrong = "";
         String luotsai = "";
+
         Scanner scanner = new Scanner(System.in);
+        
         Boolean loop = true;
-        GeneratorGame generatorGame = null;
-        Game game = null;
         while (loop) {
             readFolder(pathRoot);
             printData();
@@ -266,7 +280,7 @@ public class TestUser {
                     System.out.print("Nhap ten file: ");
                     nameFile = scanner.nextLine();
                     path = pathRoot + "/" + user + "/" + nameFile + ".txt";
-                    readData(path);
+                    game = readData(path);
                     showGame = new ShowGame(game);
                     showGame.show();
                     break;
