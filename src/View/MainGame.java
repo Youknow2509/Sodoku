@@ -3,15 +3,15 @@ package src.View;
 
 import src.Model.Game;
 
-public class CmdMainGame { // TODO vẫn thiếu hiển thị cuả loop Application
+public class MainGame { // TODO vẫn thiếu hiển thị cuả loop Application
     // Variables
     Game game = null;
     ShowGame showGame = null;
     // Constructor
-    public CmdMainGame() {
+    public MainGame() {
         super();
     }
-    public CmdMainGame(Game game) {
+    public MainGame(Game game) {
         super();
         this.game = game;
         showGame = new ShowGame(game);

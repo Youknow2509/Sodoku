@@ -3,21 +3,24 @@ package src.Controller;
 import src.Model.Game;
 import src.Model.NodeGame;
 import src.Model.Validate;
+import src.Utils.HandleData;
 import src.Utils.InputException;
-import src.View.CmdMainGame;
+import src.View.MainGame;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class GameController {
     // Variables
-    private CmdMainGame cmdMainGame = null;
+    private MainGame mainGame = null;
     private Scanner scanner = null;
     private Validate validate = null;
+    private String path = "src/Data/User/";
     //
     private Game game = null;
     private String userName = null;
     private String typeGame = null;
+    private String fileName = null;
     //
     private boolean loop = true;
     private int row, col, value;
@@ -29,7 +32,7 @@ public class GameController {
         this.userName = userName;
         this.typeGame = createTypeGame(game.getSize());
 
-        cmdMainGame = new CmdMainGame(game);
+        mainGame = new MainGame(game);
         validate = new Validate(game);
     }
     // Application functions
@@ -37,7 +40,7 @@ public class GameController {
         scanner = new Scanner(System.in);
         System.out.println();
         while (loop) {
-            cmdMainGame.showGame();
+            mainGame.showGame();
             // Nhap vi tri hang cot
             nhapHang();
             nhapCot();
@@ -52,7 +55,7 @@ public class GameController {
                     (game.getListNodeGame())[row][col].setValue(value);
                     game.giamOtrong();
                 } else {
-                    cmdMainGame.inputError();
+                    mainGame.inputError();
                     game.giamLuotsai();
                 }
             } else {
@@ -77,12 +80,19 @@ public class GameController {
         }
         switch (choose){
             case 1:
-                // TODO: Save game and back to user
+                scanner.nextLine();
+                System.out.print("Tên file bạn muốn lưu: ");
+                fileName = scanner.nextLine();
+                HandleData.createFileData(userName, fileName);
+                HandleData.writeDataToFile(path + "/" + userName + "/" + fileName + ".txt", game);
+                backToUser();
+                scanner.close();
                 break;
             case 2:
                 Application();
                 break;
             case 3:
+                scanner.close();
                 System.out.println("Goodbye " + userName + "!");
                 System.exit(0);
                 break;
@@ -92,19 +102,26 @@ public class GameController {
                 break;
         }
     }
+
     // Help functions
+    // Back to user
+    private void backToUser(){
+        UserController userController = new UserController();
+        userController.Application();
+    }
+    // Kiểm tra game đã kết thúc chưa
     private void checkLoop(){
         if (game.getOtrong() == 0) {
             loop = false;
             scanner.close();
-            cmdMainGame.gameWin();
-            // TODO back to user
+            mainGame.gameWin();
+            backToUser();
         }
         if (game.getLuotsai() == 0) {
-            cmdMainGame.gameOver();
+            mainGame.gameOver();
             scanner.close();
             loop = false;
-            // TODO back to user
+            backToUser();
         }
     }
     private String createTypeGame(int type){
@@ -112,7 +129,7 @@ public class GameController {
         return t + "x" + t;
     }
     private void nhapHang() {
-        cmdMainGame.inputRow();
+        mainGame.inputRow();
         try {
             row = scanner.nextInt();
             if (row < 0 || row >= game.getSize()) {
@@ -133,7 +150,7 @@ public class GameController {
         }
     }
     private void nhapCot() {
-        cmdMainGame.inputCol();
+        mainGame.inputCol();
         try {
             col = scanner.nextInt();
             if (col < 0 || col >= game.getSize()) {
@@ -154,7 +171,7 @@ public class GameController {
         }
     }
     private void nhapGiatri() {
-        cmdMainGame.inputValue();
+        mainGame.inputValue();
         try {
             value = scanner.nextInt();
             if (value < 1 || value > game.getSize()) {
@@ -176,12 +193,12 @@ public class GameController {
     }
     // Getters and Setters
 
-    public CmdMainGame getCmdMainGame() {
-        return cmdMainGame;
+    public MainGame getCmdMainGame() {
+        return mainGame;
     }
 
-    public void setCmdMainGame(CmdMainGame cmdMainGame) {
-        this.cmdMainGame = cmdMainGame;
+    public void setCmdMainGame(MainGame mainGame) {
+        this.mainGame = mainGame;
     }
 
     public Scanner getScanner() {

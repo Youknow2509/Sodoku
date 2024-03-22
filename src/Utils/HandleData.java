@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class HandleData {
     // Variables
-    public static String pathRoot = "src/Data/UserTemp"; // Đường dẫn đến thư mục chứa dữ liệu
+    public static String pathRoot = "src/Data/User"; // Đường dẫn đến thư mục chứa dữ liệu
     public static Map<String, ArrayList<String>> DATA = new Hashtable<String, ArrayList<String>>(); // Lưu trữ dữ liệu từ Folder
     
     // Tạo User trong file và thêm vào Data

@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
 
-public class CmdUser { // TODO loadding, viết xong Controller có hiển thị rồi sẽ chuyển phần hiển thị sang
+public class User { // TODO loadding, viết xong Controller có hiển thị rồi sẽ chuyển phần hiển thị sang
     // Variables
     private Map<String, ArrayList<String>> DATA = new Hashtable<String, ArrayList<String>>();
     
     // Constructor
-    public CmdUser() {
+    public User() {
         super();
     }
-    public CmdUser(Map<String, ArrayList<String>> DATA) {
+    public User(Map<String, ArrayList<String>> DATA) {
         super();
         this.DATA = DATA;
     }

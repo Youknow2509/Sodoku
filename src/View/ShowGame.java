@@ -19,7 +19,7 @@ public class ShowGame {
     }
     // Khởi tạo indexX
     private void initIndexX() {
-        indexX = "  | ";
+        indexX = "   | ";
         for (int i = 0; i < game.getSize(); i++) {
             if (i % game.getSizeBox() == 0 && i != 0){
                 indexX += "| ";
