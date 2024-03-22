@@ -1,7 +1,7 @@
-package src.Example;
+package src.Test;
 
 import src.Model.Game;
-import src.Model.GeneratorGame;
+import src.Utils.GeneratorGame;
 import src.View.ShowGame;
 import java.io.*;
 import java.util.*;

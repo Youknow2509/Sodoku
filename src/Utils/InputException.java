@@ -1,4 +1,4 @@
-package src.Model;
+package src.Utils;
 // Hàm xử lý ngoại lệ
 public class InputException extends Exception {
     // Constructor

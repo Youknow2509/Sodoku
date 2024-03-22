@@ -1,11 +1,15 @@
-package src.Model;
+package src.Utils;
+
+import src.Model.Game;
+import src.Model.NodeGame;
+import src.Model.Validate;
 
 import java.util.Random;
 
 public class GeneratorGame {
     // Var
     private Game game = null;
-    private NodeGame [][] listNodeGame = null;
+    private NodeGame[][] listNodeGame = null;
     private Validate validate = null;
     // Constructor
     public GeneratorGame() {
