@@ -103,7 +103,7 @@ public class TestUser {
         }
     }
     // Truyền dữ liệu vào file
-    private static void writeData(String path, Game g) {
+    private static void writeDataToFile(String path, Game g) {
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
         try {
@@ -128,7 +128,7 @@ public class TestUser {
         }
     }
     // Trả về dữ liệu từ file
-    private static Game readData(String path) {
+    private static Game readDataFromFile(String path) {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
         Game g = null;
@@ -202,15 +202,15 @@ public class TestUser {
         //String path = "src/Data/UserTemp/v/test.txt";
         //GeneratorGame generatorGame = new GeneratorGame(9, 3, 12, 3);
         //showGame = new ShowGame(generatorGame.getGame());
-        //writeData("src/Data/UserTemp/v/test.txt", generatorGame.getGame());
-        //showGame = new ShowGame(readData(path));
+        //writeDataToFile("src/Data/UserTemp/v/test.txt", generatorGame.getGame());
+        //showGame = new ShowGame(readDataFromFile(path));
         //showGame.show();
         runTest();
     }
     private static void runTest() {
         System.out.println();
         // Variables temp
-        String input = "";
+        String chooses = "";
 
         String path = "";
 
@@ -230,95 +230,99 @@ public class TestUser {
         while (loop) {
             readFolder(pathRoot);
             printFolderData();
+
             System.out.println("1. Tạo người dùng mới.");
             System.out.println("2. Tạo file lưu trữ dữ liệu.");
             System.out.println("3. Random ra dữ liệu.");
-            System.out.println("5. Thêm dữ liệu vào file người dùng."); // TODO viết tiếp phần hiển thị loop, các phương thức đã check ok
-            System.out.println("3. Xoá dữ liệu người dùng.");
-            System.out.println("4. Xoá file lưu trữ dữ liệu.");
-            System.out.println("6. Doc du lieu tu data va hien thi."); // Sau khi doc du lieu luu ra game
-            System.out.println("7. Xuat du lieu ra data");
-            System.out.println("10. Exit.");
+            System.out.println("4. Truyền dữ liệu 'vào' file người dùng.");
+            System.out.println("5. In ra màn hình dữ liệu trong file người dùng");
+            System.out.println("6. Xuất dữ liệu thành file");
+            System.out.println("7. Xoá người dùng.");
+            System.out.println("8. Xoá file lưu trữ dữ liệu.");
+            System.out.println("9. Exit.");
             System.out.print("Choose: ");
-            input = scanner.nextLine();
-            switch (input) {
-                case "1": // Create User
-                    System.out.print("Nhap ten user: ");
+            chooses = scanner.nextLine();
+
+            switch (chooses) {
+                case "1": // Tạo người dùng mới
+                    System.out.print("Nhập tên người dùng cần tạo: ");
                     user = scanner.nextLine();
                     createUser(user);
                     break;
-                case "2": // Delete User
-                    System.out.print("Nhap ten user: ");
+                case "2": // Tạo file lưu trữ dữ liệu
+                    System.out.print("Nhập tên người dùng file: ");
                     user = scanner.nextLine();
-                    deleteUser(user);
-                    break;
-                case "3": // Create file store data
-                    System.out.print("Nhap ten user: ");
-                    user = scanner.nextLine();
-                    System.out.print("Nhap loai game: ");
+                    System.out.print("Nhập loại game (9x9, 16x16, 25x25, v.v): ");
                     typeGame = scanner.nextLine();
                     createFileData(user, typeGame);
                     break;
-                case "4": // Delete file store data
-                    System.out.print("Nhap ten user: ");
-                    user = scanner.nextLine();
-                    System.out.print("Nhap ten file: ");
-                    nameFile = scanner.nextLine();
-                    deleteFileData(user, nameFile);
-                    break;
-                case "5": // Them data vao user
-                    System.out.print("Nhap ten user: ");
-                    user = scanner.nextLine();
-                    System.out.print("Nhap ten file data: ");
-                    nameFile = scanner.nextLine();
-                    path = pathRoot + "/" + user + "/" + nameFile + ".txt";
-                    writeData(path, game);
-                    break;
-                case "6": // Doc du lieu tu data va hien thi
-                    System.out.print("Nhap ten user: ");
-                    user = scanner.nextLine();
-                    System.out.print("Nhap ten file: ");
-                    nameFile = scanner.nextLine();
-                    path = pathRoot + "/" + user + "/" + nameFile + ".txt";
-                    game = readData(path);
-                    showGame = new ShowGame(game);
-                    showGame.show();
-                    break;
-                case "7": // Xuat du lieu ra data
-                    System.out.print("Nhap ten user: ");
-                    user = scanner.nextLine();
-                    System.out.print("Nhap ten file: ");
-                    nameFile = scanner.nextLine();
-                    path = pathRoot + "/" + user + "/" + nameFile + ".txt";
-                    writeData(path, game);
-                    break;
-                case "8": // Generate data and show
-                    System.out.println("Nhap loai game: ");
+                case "3": // Random ra dữ liệu
+                    System.out.print("Nhập kích thước game (9x9, 16x16, 25x25, v.v): ");
                     size = scanner.nextLine();
-                    System.out.println("Nhap so o trong:");
+                    System.out.print("Nhập số ô trống: ");
                     oTrong = scanner.nextLine();
-                    System.out.println("Nhap so luot sai:");
+                    System.out.print("Nhập số lượt sai: ");
                     luotsai = scanner.nextLine();
-                    int SIZE = 0;
-                    int OTRONG = 0;
-                    int LUOTSAI = 0;
                     try {
-                        SIZE = Integer.parseInt(size);
-                        OTRONG = Integer.parseInt(oTrong);
-                        LUOTSAI = Integer.parseInt(luotsai);
+                        generatorGame = new GeneratorGame(Integer.parseInt(size), (int) Math.sqrt(Integer.parseInt(size)), Integer.parseInt(oTrong), Integer.parseInt(luotsai));
                     } catch (NumberFormatException e) {
-                        System.out.println("Nhap sai dinh dang.");
+                        System.out.println("Vui lòng nhập số nguyên !!!");
                         break;
                     }
-                    generatorGame = new GeneratorGame(SIZE, (int) Math.sqrt(SIZE), OTRONG, LUOTSAI);
                     showGame = new ShowGame(generatorGame.getGame());
                     showGame.show();
                     break;
+                case "4": // Truyền dữ liệu 'vào' file người dùng
+                    if (game == null) {
+                        System.out.println("Chưa có dữ liệu game !!!");
+                    } else {
+                        System.out.print("Nhập tên người dùng: ");
+                        user = scanner.nextLine();
+                        System.out.print("Nhập tên file: ");
+                        nameFile = scanner.nextLine();
+                        path = pathRoot + "/" + user + "/" + nameFile + ".txt";
+                        writeDataToFile(path, game);
+                    }
+                    break;
+                case "5": // In ra màn hình dữ liệu trong file người dùng
+                    System.out.print("Nhập tên người dùng: ");
+                    user = scanner.nextLine();
+                    System.out.print("Nhập tên file: ");
+                    nameFile = scanner.nextLine();
+                    path = pathRoot + "/" + user + "/" + nameFile + ".txt";
+                    showGame = new ShowGame(readDataFromFile(path));
+                    showGame.show();
+                    break;
+                case "6": // Xuất dữ liệu thành file
+                    if (game == null) {
+                        System.out.println("Chưa có dữ liệu game !!!");
+                    } else {
+                        System.out.print("Nhập tên người dùng nhận dữ liệu: ");
+                        user = scanner.nextLine();
+                        System.out.print("Nhập tên file chứa dữ liệu: ");
+                        nameFile = scanner.nextLine();
+                        path = pathRoot + "/" + user + "/" + nameFile + ".txt";
+                        writeDataToFile(path, game);
+                    }
+                    break;
+                case "7": // Xoá người dùng
+                    System.out.print("Nhập tên người dùng cần xoá: ");
+                    user = scanner.nextLine();
+                    deleteUser(user);
+                    break;
+                case "8": // Xoá file lưu trữ dữ liệu
+                    System.out.print("Nhập tên người dùng: ");
+                    user = scanner.nextLine();
+                    System.out.print("Nhập tên file xoá: ");
+                    nameFile = scanner.nextLine();
+                    deleteFileData(user, nameFile);
+                    break;
                 case "9": // Exit
+                    System.out.println("Thoát chương trình !!!");
                     loop = false;
                     break;
                 default:
-                    System.out.println("Nhap sai.");
+                    System.out.println("Vui lòng chọn đúng giá trị !!!");
                     break;
             }
         }
