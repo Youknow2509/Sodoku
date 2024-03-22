@@ -1,24 +1,20 @@
 package src.Example;
 
-import javafx.util.Pair;
 import src.Model.Game;
 import src.Model.GeneratorGame;
-import src.Model.NodeGame;
 import src.View.ShowGame;
-
-import javax.xml.crypto.Data;
 import java.io.*;
 import java.util.*;
 
 public class TestUser {
     // Variables
-    private static Map<String, ArrayList<String>> DATA = new Hashtable<String, ArrayList<String>>();
-    private static String pathRoot = "src/Data/UserTemp";
-    private static Game game = null;
-    private static ShowGame showGame = null;
-    private static GeneratorGame generatorGame = null;
+    private static Map<String, ArrayList<String>> DATA = new Hashtable<String, ArrayList<String>>(); // Lưu trữ dữ liệu từ Folder
+    private static String pathRoot = "src/Data/UserTemp"; // Đường dẫn đến thư mục chứa dữ liệu
+    private static Game game = null; // Dữ liệu game
+    private static ShowGame showGame = null; // Thêm vào để đọc dữ liệu ra để kiểm tra ( Để test )
+    private static GeneratorGame generatorGame = null; // Thêm để tạo ra dữ liệu để (truyền , xuất), đọc dữ liệu ra để kiểm tra ( Để test )
 
-
+    // Method :
     // Quét Folder
     private static void readFolder(String path) {
         File file = new File(path);
@@ -39,27 +35,19 @@ public class TestUser {
         }
     }
     // In dữ liệu
-    private static void printData() {
+    private static void printFolderData() {
         int index = 1;
         System.out.println("Data hava: " +countUser() + " users.");
         for (Map.Entry<String, ArrayList<String>> entry : DATA.entrySet()) {
             String key = entry.getKey();
             ArrayList<String> value = entry.getValue();
-            System.out.print("User " + index + " " + key + ", " + cDataofUser(entry.getKey()) + " file: ");
+            System.out.print("User " + index + " " + key + ", " + countDataofUser(entry.getKey()) + " file: ");
             index++;
             for (String s : value) {
                 System.out.print(s + ", ");
             }
             System.out.println();
         }
-    }
-    // Trả về số lượng User
-    private static int countUser() {
-        return DATA.size();
-    }
-    // Trả về số lượng dữ liệu của từng User
-    private static int cDataofUser(String user) {
-        return DATA.get(user).size();
     }
     // Tạo User trong file và thêm vào Data
     private static void createUser(String user) {
@@ -87,33 +75,8 @@ public class TestUser {
             System.out.println("Khong ton tai user: " + user);
         }
     }
-    // Trả về định dạng tên
-    private static String formatName(String typeGame, int idGame) {
-        return typeGame + "_" + String.valueOf(idGame);
-    }
-    // Trả về tên file mới
-    private static String createNameFile(String nameUser, String typeGame) {
-        int idGame = 1;
-        String nameFile = formatName(typeGame, idGame);;
-        ArrayList<String> listFile = null;
-        try {
-            listFile = DATA.get(nameUser);
-        } catch (NullPointerException e) {
-            System.out.println("Khong tim thay user.");
-        }
-        if (listFile != null) {
-            for (int i = 0; i < listFile.size(); i++) {
-                nameFile = formatName(typeGame, idGame);
-                if (listFile.get(i).equals(nameFile + ".txt")) {
-                    idGame++;
-                }
-            }
-        }
-        nameFile = formatName(typeGame, idGame);
-        return nameFile;
-    }
-    // Thêm dữ liệu vào User
-    private static void createData(String user, String typeGame) {
+    // Thêm file dữ liệu vào User - Tạo file mới và chưa truyền dữ liệu
+    private static void createFileData(String user, String typeGame) {
         String fileName = createNameFile(user, typeGame);
         String path = pathRoot + "/" + user + "/" + fileName + ".txt";
         File file = new File(path);
@@ -123,18 +86,18 @@ public class TestUser {
                 DATA.get(user).add(fileName);
             } catch (IOException e) {
                 createUser(user);
-                createData(user, typeGame);
+                createFileData(user, typeGame);
             }
         } else {
             System.out.println("File da ton tai: " + fileName);
         }
     }
-    // Xoá dữ liệu trong User
-    private static void deleteData(String user, String data) {
-        File file = new File(pathRoot + "/" + user + "/" + data + ".txt");
+    // Xoá file dữ liệu trong User
+    private static void deleteFileData(String user, String nameFile) {
+        File file = new File(pathRoot + "/" + user + "/" + nameFile + ".txt");
         try {
             file.delete();
-            DATA.get(user).remove(data);
+            DATA.get(user).remove(nameFile);
         } catch (NullPointerException e) {
             System.out.println("Khong tim thay file de xoa.");
         }
@@ -164,7 +127,7 @@ public class TestUser {
             }
         }
     }
-    // Đọc dữ liệu từ file
+    // Trả về dữ liệu từ file
     private static Game readData(String path) {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
@@ -199,6 +162,42 @@ public class TestUser {
         }
         return g;
     }
+
+    // Help functoin :
+    // Help Print Folder Data - Trả về số lượng User
+    private static int countUser() {
+        return DATA.size();
+    }
+    // Help Print Folder Data - Trả về số lượng dữ liệu của từng User
+    private static int countDataofUser(String user) {
+        return DATA.get(user).size();
+    }
+    // Help createFileData - Trả về định dạng tên : typeGame_idGame (typeGame: 9x9, 16x16, 25x25, idGame: 1, 2, 3, ...)
+    private static String formatName(String typeGame, int idGame) {
+        return typeGame + "_" + String.valueOf(idGame);
+    }
+    // Help createFileData - Trả về tên file mới, chọn idGame thích hợp để tạo file mới
+    private static String createNameFile(String nameUser, String typeGame) {
+        int idGame = 1;
+        String nameFile = formatName(typeGame, idGame);;
+        ArrayList<String> listFile = null;
+        try {
+            listFile = DATA.get(nameUser);
+        } catch (NullPointerException e) {
+            System.out.println("Trong du lieu khong co user: " + nameUser + "!!!\n Hay tao moi user !!!");
+        }
+        if (listFile != null) {
+            for (int i = 0; i < listFile.size(); i++) {
+                nameFile = formatName(typeGame, idGame);
+                if (listFile.get(i).equals(nameFile + ".txt")) {
+                    idGame++;
+                }
+            }
+        }
+        nameFile = formatName(typeGame, idGame);
+        return nameFile;
+    }
+
     public static void main(String[] args) {
         //String path = "src/Data/UserTemp/v/test.txt";
         //GeneratorGame generatorGame = new GeneratorGame(9, 3, 12, 3);
@@ -210,7 +209,7 @@ public class TestUser {
     }
     private static void runTest() {
         System.out.println();
-
+        // Variables temp
         String input = "";
 
         String path = "";
@@ -224,20 +223,21 @@ public class TestUser {
         String oTrong = "";
         String luotsai = "";
 
+        // Scanner
         Scanner scanner = new Scanner(System.in);
-        
+        // Var loop
         Boolean loop = true;
         while (loop) {
             readFolder(pathRoot);
-            printData();
-            System.out.println("1. Create User.");
-            System.out.println("2. Delete User.");
-            System.out.println("3. Create file store data.");
-            System.out.println("4. Delete file store data.");
-            System.out.println("5. Them data vao user.");
+            printFolderData();
+            System.out.println("1. Tạo người dùng mới.");
+            System.out.println("2. Tạo file lưu trữ dữ liệu.");
+            System.out.println("3. Random ra dữ liệu.");
+            System.out.println("5. Thêm dữ liệu vào file người dùng."); // TODO viết tiếp phần hiển thị loop, các phương thức đã check ok
+            System.out.println("3. Xoá dữ liệu người dùng.");
+            System.out.println("4. Xoá file lưu trữ dữ liệu.");
             System.out.println("6. Doc du lieu tu data va hien thi."); // Sau khi doc du lieu luu ra game
             System.out.println("7. Xuat du lieu ra data");
-            System.out.println("8. Generate data and show.");
             System.out.println("10. Exit.");
             System.out.print("Choose: ");
             input = scanner.nextLine();
@@ -257,14 +257,14 @@ public class TestUser {
                     user = scanner.nextLine();
                     System.out.print("Nhap loai game: ");
                     typeGame = scanner.nextLine();
-                    createData(user, typeGame);
+                    createFileData(user, typeGame);
                     break;
                 case "4": // Delete file store data
                     System.out.print("Nhap ten user: ");
                     user = scanner.nextLine();
                     System.out.print("Nhap ten file: ");
                     nameFile = scanner.nextLine();
-                    deleteData(user, nameFile);
+                    deleteFileData(user, nameFile);
                     break;
                 case "5": // Them data vao user
                     System.out.print("Nhap ten user: ");
