@@ -21,6 +21,22 @@ public class Game implements Serializable {
         this.otrong = otrong;
         this.luotsai = luotsai;
     }
+    // Giam so o trong
+    public void giamOtrong() {
+        otrong--;
+    }
+    // Giam so luot sai
+    public void giamLuotsai() {
+        luotsai--;
+    }
+    // Tang so o trong
+    public void tangOtrong() {
+        otrong++;
+    }
+    // Tang so luot sai
+    public void tangLuotsai() {
+        luotsai++;
+    }
     // Getters and Setters
     public NodeGame [][] getListNodeGame() {
         return listNodeGame;
