@@ -19,7 +19,7 @@ public class ShowGame {
     }
     // Khởi tạo indexX
     private void initIndexX() {
-        indexX = " | ";
+        indexX = "  | ";
         for (int i = 0; i < game.getSize(); i++) {
             if (i % game.getSizeBox() == 0 && i != 0){
                 indexX += "| ";
@@ -34,7 +34,7 @@ public class ShowGame {
     }
     // Khởi tạo line
     private void initLine() {
-        int s = game.getSize()*3 + (game.getSizeBox() + 1)*2 + 1;
+        int s = game.getSize()*3 + (game.getSizeBox() + 1)*2 + 2;
         for (int i = 0; i < s; i++) {
             line += "-";
         }
@@ -48,7 +48,7 @@ public class ShowGame {
             if (i % game.getSizeBox() == 0){
                 System.out.println(line);
             }
-            System.out.print(i);
+            System.out.format("%2d ", i);
             for (int j = 0; j < game.getSize(); j++) {
                 if (j % game.getSizeBox() == 0){
                     System.out.print("| ");
