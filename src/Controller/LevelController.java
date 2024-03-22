@@ -8,7 +8,7 @@ import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
-public class LevelController {
+public class LevelController { // TODO chuyển hiển thị sang View
     // Variables
     private final String path = "src/Data/Game/";
     private Scanner scanner = null;
@@ -20,12 +20,11 @@ public class LevelController {
     public LevelController() {
         super();
     }
-    public LevelController(String user, int typeGame, int level) {
+    public LevelController(String user) {
         super();
-        this.typeGame = typeGame;
-        this.level = level;
         this.user = user;
     }
+
     // Applicaton
     public void Application() {
         scanner = new Scanner(System.in);
@@ -69,9 +68,9 @@ public class LevelController {
         if (level == 1) {
             LevelToGame(path + "9x9/Ez/");
         } else if (level == 2) {
-            LevelToGame(path + "9x9/Hard");
-        } else {
             LevelToGame(path + "9x9/Medial");
+        } else {
+            LevelToGame(path + "9x9/Hard");
         }
     }
     // Handle typeGame 16x16
@@ -94,9 +93,9 @@ public class LevelController {
         if (level == 1) {
             LevelToGame(path + "16x16/Ez/");
         } else if (level == 2) {
-            LevelToGame(path + "16x16/Hard");
-        } else {
             LevelToGame(path + "16x16/Medial");
+        } else {
+            LevelToGame(path + "16x16/Hard");
         }
     }
     // Level to Game
