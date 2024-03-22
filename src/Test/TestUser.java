@@ -269,7 +269,8 @@ public class TestUser {
                         System.out.println("Vui lòng nhập số nguyên !!!");
                         break;
                     }
-                    showGame = new ShowGame(generatorGame.getGame());
+                    game  = generatorGame.getGame();
+                    showGame = new ShowGame(game);
                     showGame.show();
                     break;
                 case "4": // Truyền dữ liệu 'vào' file người dùng
