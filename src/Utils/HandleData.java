@@ -10,7 +10,7 @@ import java.util.Map;
 public class HandleData {
     // Variables
     public static String pathRoot = "src/Data/User"; // Đường dẫn đến thư mục chứa dữ liệu
-    public static Map<String, ArrayList<String>> DATA = new Hashtable<String, ArrayList<String>>(); // Lưu trữ dữ liệu từ Folder
+    private static Map<String, ArrayList<String>> DATA = new Hashtable<String, ArrayList<String>>(); // Lưu trữ dữ liệu từ Folder
     
     // Tạo User trong file và thêm vào Data
     public static void createUser(String user) {
@@ -39,8 +39,7 @@ public class HandleData {
         }
     }
     // Thêm file dữ liệu vào User - Tạo file mới và chưa truyền dữ liệu
-    public static void createFileData(String user, String typeGame) {
-        String fileName = createNameFile(user, typeGame);
+    public static void createFileData(String user, String fileName) {
         String path = pathRoot + "/" + user + "/" + fileName + ".txt";
         File file = new File(path);
         if (!file.exists()) {
@@ -49,7 +48,10 @@ public class HandleData {
                 DATA.get(user).add(fileName);
             } catch (IOException e) {
                 createUser(user);
-                createFileData(user, typeGame);
+                createFileData(user, fileName);
+            } catch (NullPointerException e) {
+                createUser(user);
+                createFileData(user, fileName);
             }
         } else {
             System.out.println("File da ton tai: " + fileName);
@@ -125,29 +127,13 @@ public class HandleData {
         }
         return g;
     }
-    // Help functions
-    private static String createNameFile(String nameUser, String typeGame) {
-        int idGame = 1;
-        String nameFile = formatName(typeGame, idGame);;
-        ArrayList<String> listFile = null;
-        try {
-            listFile = DATA.get(nameUser);
-        } catch (NullPointerException e) {
-            System.out.println("Trong du lieu khong co user: " + nameUser + "!!!\n Hay tao moi user !!!");
-        }
-        if (listFile != null) {
-            for (int i = 0; i < listFile.size(); i++) {
-                nameFile = formatName(typeGame, idGame);
-                if (listFile.get(i).equals(nameFile + ".txt")) {
-                    idGame++;
-                }
-            }
-        }
-        nameFile = formatName(typeGame, idGame);
-        return nameFile;
+    // get set
+
+    public static Map<String, ArrayList<String>> getDATA() {
+        return DATA;
     }
-    // Help createFileData - Trả về định dạng tên : typeGame_idGame (typeGame: 9x9, 16x16, 25x25, idGame: 1, 2, 3, ...)
-    private static String formatName(String typeGame, int idGame) {
-        return typeGame + "_" + String.valueOf(idGame);
+
+    public static void setDATA(Map<String, ArrayList<String>> DATA) {
+        HandleData.DATA = DATA;
     }
 }

@@ -1,75 +1,147 @@
 package src.Controller;
 
 import src.Model.Game;
+import src.Utils.Config;
 import src.Utils.HandleData;
+import src.View.Level;
+import src.View.User;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
-public class UserController {  // TODO chuyển hiển thị sang View
+public class UserController {  // TODO tất cả chuyển hiển thị sang View
     // Variables
-    private Map<String, ArrayList<String>> DATA = new Hashtable<String, ArrayList<String>>();
-    private String pathRoot = "src/Data/User/";
-    private Scanner scanner = null;
-    //
+    private String pathRoot = "src/Data/User";
+    private User userView = null;
     private boolean loop = true;
+    private GameController gameController = null;
+    private LevelController levelController = null;
+    //
+    private String path = "";
+    // Variable input
     private String user = null;
     private String nameFile = null;
+    private String typeGame = null;
+    private String choose = null;
+    private int c;
+
     // Constructor
     public UserController() {
         super();
         readFolder(pathRoot);
+        userView = new User();
     }
     // Application
     public void Application() {
-        int chooses = 0;
-        printFolderData();
-        System.out.println("Bạn muốn chơi tiếp hay tạo mới User ?");
-        System.out.println("1: Chơi tiếp.\n2: Tạo mới.\n3: Thoát.");
-        System.out.print("Chọn: ");
-        scanner = new Scanner(System.in);
-        try {
-            chooses = scanner.nextInt();
-            if (chooses != 1 && chooses != 2 && chooses != 3) {
-                System.out.println("Vui lòng chọn 1, 2 hoặc 3 !!!");
+        while (loop) {
+            userView.viewApplication();
+            choose = Config.getScannerInput().nextLine();
+
+            try {
+                c = Integer.parseInt(choose);
+                if (c < 1 || c > 4) {
+                    System.out.println("Hãy điển giá trị từ 1 đến 4 !!!");
+                    Application();
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Hãy điển giá trị 'nguyên' từ 1 đến 4 !!!");
                 Application();
             }
-        } catch (InputMismatchException e) {
-            System.out.println("Vui lòng nhập số nguyên !!!");
-            scanner.nextLine(); // Xoá dữ liệu lỗi
-            Application();
-        }
-        scanner.nextLine();
-        if (chooses == 1) {
-            if (countUser() == 0) {
-                System.out.println("Không có User nào, vui lòng chọn 2 tạo mới User !!!");
-                Application();
-            } else {
-                printFolderData();
-                System.out.println("Chọn User để chơi: ");
-                user = scanner.nextLine();
-                System.out.println("Chọn file game: ");
-                nameFile = scanner.nextLine();
-                String path = pathRoot + user + "/" + nameFile + ".txt";
 
-                    Game game = HandleData.readDataFromFile(path);
-                    GameController gameController = new GameController(HandleData.readDataFromFile(path), user);
-                    gameController.Application();
-
+            switch (c) {
+                case 1:
+                    playContinue();
+                    break;
+                case 2:
+                    playNew();
+                    break;
+                case 3:
+                    showDataUser();
+                    break;
+                case 4:
+                    loop = false;
+                    System.out.println("Exit !!!");
+                    break;
+                default:
+                    System.out.println("Biến c không hợp lệ !!!");
+                    break;
             }
-        } else if (chooses == 2) {
-            System.out.print("Tạo mới User: ");
-            user = scanner.nextLine();
-            HandleData.createUser(user);
-            LevelController levelController = new LevelController(user);
-            levelController.Application();
-        } else {
-            System.out.println("Goodbye !!!");
-            System.exit(0);
         }
     }
+    // Chơi tiếp dữ liệp cũ
+    private void playContinue() {
+        printFolderData();
+        if (countUser() == 0) {
+            userView.requestCreateUser();
+        } else {
+            userView.requestInputNameUser();
+            user = Config.getScannerInput().nextLine();
+            if (countDataofUser(user) == 0 || (HandleData.getDATA()).get(user) == null) {
+                userView.notifyUserNoData();
+                return;
+            }
+            userView.requestInputNameFile();
+            nameFile = Config.getScannerInput().nextLine();
+            if (!(HandleData.getDATA()).get(user).contains(nameFile + ".txt")) {
+                userView.notifyFileNoExist();
+                return;
+            }
+            path = pathRoot + "/" + user + "/" + nameFile + ".txt";
+            gameController = new GameController(HandleData.readDataFromFile(path), user);
+            gameController.Application();
+        }
+    }
+    // Chơi mới
+    private void playNew() {
+        userView.requestInputNameUser();
+        user = Config.getScannerInput().nextLine();
+        levelController = new LevelController(user);
+        levelController.Application();
+    }
+    // Hiển thị dữ liệu người dùng
+    private void showDataUser() {
+        printFolderData();
+        userView.optionDataUser();
+        choose = Config.getScannerInput().nextLine();
+
+        try {
+            c = Integer.parseInt(choose);
+            if (c < 1 || c > 3) {
+                System.out.println("Hãy điển giá trị từ 1 đến 3 !!!");
+                showDataUser();
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Hãy điển giá trị 'nguyên' từ 1 đến 3 !!!");
+            showDataUser();
+        }
+        if (c == 1) {
+            System.out.println("Nhập tên người dùng cần xoá dữ liệu: ");
+            user = Config.getScannerInput().nextLine();
+            try {
+                HandleData.deleteUser(user);
+            } catch (NullPointerException e) {
+                System.out.println("Không tồn tại user: " + user);
+                showDataUser();
+            }
+            showDataUser();
+        } else if (c == 2) {
+            System.out.println("Nhập tên người dùng cần xoá dữ liệu: ");
+            user = Config.getScannerInput().nextLine();
+            System.out.println("Nhập tên file cần xoá: ");
+            nameFile = Config.getScannerInput().nextLine();
+            try {
+                HandleData.deleteFileData(user, nameFile);
+            } catch (NullPointerException e) {
+                System.out.println("Không tìm thấy file");
+                showDataUser();
+            }
+        } else {
+            return;
+        }
+    }
+
 
     // Help functoin :
     // Đọc dữ liệu trong Folder
@@ -80,11 +152,11 @@ public class UserController {  // TODO chuyển hiển thị sang View
             for (File f : lFiles) { // Duyệt các Folder
                 if (f.isDirectory()) {
                     String nameFolder = f.getName();
-                    DATA.put(nameFolder, new ArrayList<>());
+                    (HandleData.getDATA()).put(nameFolder, new ArrayList<>());
                     for (File f1 : f.listFiles()) { // Duyệt các file trong Folder
                         if (f1.isFile() && f1.getName().contains(".txt")){ // Lọc file .txt
                             String nameFile = f1.getName();
-                            DATA.get(nameFolder).add(nameFile);
+                            (HandleData.getDATA()).get(nameFolder).add(nameFile);
                         }
                     }
                 }
@@ -94,11 +166,11 @@ public class UserController {  // TODO chuyển hiển thị sang View
     // In dữ liệu trong Folder
     private void printFolderData() {
         int index = 1;
-        System.out.println("Data hava: " + countUser() + " users.");
-        for (Map.Entry<String, ArrayList<String>> entry : DATA.entrySet()) {
+        System.out.println("Dữ liệu có " + countUser() + " người dùng.");
+        for (Map.Entry<String, ArrayList<String>> entry : (HandleData.getDATA()).entrySet()) {
             String key = entry.getKey();
             ArrayList<String> value = entry.getValue();
-            System.out.print("User " + index + " " + key + ", " + countDataofUser(entry.getKey()) + " file: ");
+            System.out.print("Người dùng " + index + " '" + key + "', " + countDataofUser(entry.getKey()) + " dữ liệu: ");
             index++;
             for (String s : value) {
                 System.out.print(s + ", ");
@@ -108,37 +180,104 @@ public class UserController {  // TODO chuyển hiển thị sang View
         System.out.println();
     }
     private int countUser() {
-        return DATA.size();
+        return (HandleData.getDATA()).size();
     }
     // Help Print Folder Data - Trả về số lượng dữ liệu của từng User
     private int countDataofUser(String user) {
-        return DATA.get(user).size();
-    }
-    // Help createFileData - Trả về định dạng tên : typeGame_idGame (typeGame: 9x9, 16x16, 25x25, idGame: 1, 2, 3, ...)
-    private String formatName(String typeGame, int idGame) {
-        return typeGame + "_" + String.valueOf(idGame);
-    }
-    // Help createFileData - Trả về tên file mới, chọn idGame thích hợp để tạo file mới
-    private String createNameFile(String nameUser, String typeGame) {
-        int idGame = 1;
-        String nameFile = formatName(typeGame, idGame);;
-        ArrayList<String> listFile = null;
         try {
-            listFile = DATA.get(nameUser);
+            return (HandleData.getDATA()).get(user).size();
+
         } catch (NullPointerException e) {
-            System.out.println("Trong du lieu khong co user: " + nameUser + "!!!\n Hay tao moi user !!!");
+            return 0;
         }
-        if (listFile != null) {
-            for (int i = 0; i < listFile.size(); i++) {
-                nameFile = formatName(typeGame, idGame);
-                if (listFile.get(i).equals(nameFile + ".txt")) {
-                    idGame++;
-                }
-            }
-        }
-        nameFile = formatName(typeGame, idGame);
-        return nameFile;
     }
     // Getter and Setter
 
+    public String getPathRoot() {
+        return pathRoot;
+    }
+
+    public void setPathRoot(String pathRoot) {
+        this.pathRoot = pathRoot;
+    }
+
+    public User getUserView() {
+        return userView;
+    }
+
+    public void setUserView(User userView) {
+        this.userView = userView;
+    }
+
+    public boolean isLoop() {
+        return loop;
+    }
+
+    public void setLoop(boolean loop) {
+        this.loop = loop;
+    }
+
+    public GameController getGameController() {
+        return gameController;
+    }
+
+    public void setGameController(GameController gameController) {
+        this.gameController = gameController;
+    }
+
+    public LevelController getLevelController() {
+        return levelController;
+    }
+
+    public void setLevelController(LevelController levelController) {
+        this.levelController = levelController;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getNameFile() {
+        return nameFile;
+    }
+
+    public void setNameFile(String nameFile) {
+        this.nameFile = nameFile;
+    }
+
+    public String getTypeGame() {
+        return typeGame;
+    }
+
+    public void setTypeGame(String typeGame) {
+        this.typeGame = typeGame;
+    }
+
+    public String getChoose() {
+        return choose;
+    }
+
+    public void setChoose(String choose) {
+        this.choose = choose;
+    }
+
+    public int getC() {
+        return c;
+    }
+
+    public void setC(int c) {
+        this.c = c;
+    }
 }

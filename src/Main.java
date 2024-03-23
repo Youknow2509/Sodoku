@@ -1,7 +1,15 @@
 package src;
 
+import src.Controller.UserController;
+import src.Utils.Config;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+
+        UserController userController = new UserController();
+        userController.Application();
+
+        Config.closeScannerInput();
+        return;
     }
 }
