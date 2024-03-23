@@ -6,24 +6,24 @@ import src.Model.Validate;
 import src.Utils.HandleData;
 import src.Utils.InputException;
 import src.View.MainGame;
-
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
+import src.Utils.Config;
 public class GameController {
     // Variables
-    private MainGame mainGame = null;
-    private Scanner scanner = null;
+    private MainGame mainGame = null; // View
     private Validate validate = null;
     private String path = "src/Data/User/";
     //
     private Game game = null;
+    private boolean loop = true;
+    // Var input for game
     private String userName = null;
     private String typeGame = null;
     private String fileName = null;
-    //
-    private boolean loop = true;
-    private int row, col, value;
+    private String row = null;
+    private String col = null;
+    private String value = null;
+    private String choose = null;
+    private int r, c, v, ch;
     // Constructor
     public GameController(){super();}
     public GameController(Game game, String userName){
@@ -37,7 +37,6 @@ public class GameController {
     }
     // Application functions
     public void Application(){
-        scanner = new Scanner(System.in);
         System.out.println();
         while (loop) {
             mainGame.showGame();
@@ -45,59 +44,62 @@ public class GameController {
             nhapHang();
             nhapCot();
             // Kiểm tra đã chọn đúng ô chưa, nếu chưa bắt nhập lại
-            if ((game.getListNodeGame())[row][col].getValue() == 0) {
+            if ((game.getListNodeGame())[r][c].getValue() == 0) {
                 nhapGiatri();
                 // Kiểm tra giá trị nhập vào có hợp lệ không:
                 // - Đúng: Thay đổi giá trị, giảm số ô trống.
                 // - Sai:  Giảm số lượt còn lại.
-                NodeGame nodeTemp = new NodeGame(row, col, value);
+                NodeGame nodeTemp = new NodeGame(r, c, v);
                 if (validate.ValidateSafe(nodeTemp)) {
-                    (game.getListNodeGame())[row][col].setValue(value);
+                    (game.getListNodeGame())[r][c].setValue(v);
                     game.giamOtrong();
                 } else {
-                    mainGame.inputError();
+                    mainGame.inputValueError();
                     game.giamLuotsai();
                 }
             } else {
-                System.out.println("Hay chon dung vi tri trong");
+                mainGame.inputPositionError();
             }
             checkLoop();
         }
     }
     // Menu
-    public void menu(){
-        int choose = 2;
-        System.out.println("1. Save and back to user");
-        System.out.println("2. Continue");
-        System.out.println("3. Exit");
-        System.out.print("Chon: ");
+    private void menu(){
+
+        mainGame.showMenu();
+        choose = (Config.getScannerInput()).nextLine();
         try {
-            choose = scanner.nextInt();
-        } catch (InputMismatchException e) {
-            System.out.println("Vui lòng nhập số nguyên.");
-            scanner.nextLine(); // Xóa dòng không hợp lệ khỏi input
+            ch = Integer.parseInt(choose);
+            if (ch < 1 || ch > 4) {
+                throw new InputException("Vui lòng chọn giá trị từ 1 đến 4.");
+            }
+        } catch (InputException e) {
+            System.out.println(e.getMessage());
+            menu();
+        } catch (NumberFormatException e) {
+            mainGame.inputNumberFormatError();
             menu();
         }
-        switch (choose){
+        switch (ch){
             case 1:
-                scanner.nextLine();
-                System.out.print("Tên file bạn muốn lưu: ");
-                fileName = scanner.nextLine();
+                mainGame.nameFileSave();
+                fileName = (Config.getScannerInput()).nextLine();
                 HandleData.createFileData(userName, fileName);
                 HandleData.writeDataToFile(path + "/" + userName + "/" + fileName + ".txt", game);
-                backToUser();
-                scanner.close();
+                Application();
                 break;
             case 2:
                 Application();
                 break;
-            case 3:
-                scanner.close();
-                System.out.println("Goodbye " + userName + "!");
+            case 4:
+                mainGame.goodbye(userName);
                 System.exit(0);
                 break;
+            case 3:
+                backToUser();
+                break;
             default:
-                System.out.println("Vui lòng chọn giá trị từ 1 đến 3.");
+                System.out.println("Vui lòng chọn giá trị từ 1 đến 4.");
                 menu();
                 break;
         }
@@ -113,14 +115,12 @@ public class GameController {
     private void checkLoop(){
         if (game.getOtrong() == 0) {
             loop = false;
-            scanner.close();
             mainGame.gameWin();
             backToUser();
         }
         if (game.getLuotsai() == 0) {
-            mainGame.gameOver();
-            scanner.close();
             loop = false;
+            mainGame.gameOver();
             backToUser();
         }
     }
@@ -130,85 +130,73 @@ public class GameController {
     }
     private void nhapHang() {
         mainGame.inputRow();
-        try {
-            row = scanner.nextInt();
-            if (row < 0 || row >= game.getSize()) {
-                throw new InputException("Vui long nhap toa do trong khoang 0 den " + (game.getSize() - 1));
-            }
-        } catch (InputException e) {
-            System.out.println(e.getMessage());
-            nhapHang();
-        } catch (InputMismatchException e) {
-            String input = scanner.nextLine();// Lưu giá trị và Xóa dòng không hợp lệ khỏi input
-            input = input.toLowerCase();
-            if (input.equals("menu")) {
-                menu();
-            } else {
-                System.out.println("Vui lòng nhập số nguyên.");
+        row = (Config.getScannerInput()).nextLine();
+        if (row.equals("menu")) {
+            menu();
+        } else {
+            try {
+                r = Integer.parseInt(row);
+                if (r < 0 || r >= game.getSize()) {
+                    throw new InputException("Vui lòng nhập số nguyên có gía trị từ 0 đến " + (game.getSize() - 1));
+                }
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+                nhapHang();
+            } catch (NumberFormatException e) {
+                mainGame.inputNumberFormatError();
                 nhapHang();
             }
         }
     }
     private void nhapCot() {
         mainGame.inputCol();
-        try {
-            col = scanner.nextInt();
-            if (col < 0 || col >= game.getSize()) {
-                throw new InputException("Vui long nhap toa do trong khoang 0 den " + (game.getSize() - 1));
-            }
-        } catch (InputException e) {
-            System.out.println(e.getMessage());
-            nhapCot();
-        } catch (InputMismatchException e) {
-            String input = scanner.nextLine();// Lưu giá trị và Xóa dòng không hợp lệ khỏi input
-            input = input.toLowerCase();
-            if (input.equals("menu")) {
-                menu();
-            } else {
-                System.out.println("Vui lòng nhập số nguyên.");
+        col = (Config.getScannerInput()).nextLine();
+        if (col.equals("menu")) {
+            menu();
+        } else {
+            try {
+                c = Integer.parseInt(col);
+                if (c < 0 || c >= game.getSize()) {
+                    throw new InputException("Vui lòng nhập số nguyên có gía trị từ 0 đến " + (game.getSize() - 1));
+                }
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+                nhapCot();
+            } catch (NumberFormatException e) {
+                mainGame.inputNumberFormatError();
                 nhapCot();
             }
         }
     }
     private void nhapGiatri() {
         mainGame.inputValue();
-        try {
-            value = scanner.nextInt();
-            if (value < 1 || value > game.getSize()) {
-                throw new InputException("Vui long nhap gia tri trong khoang 1 den " + game.getSize());
-            }
-        } catch (InputException e) {
-            System.out.println(e.getMessage());
-            nhapGiatri();
-        } catch (InputMismatchException e) {
-            String input = scanner.nextLine();// Lưu giá trị và Xóa dòng không hợp lệ khỏi input
-            input = input.toLowerCase();
-            if (input.equals("menu")) {
-                menu();
-            } else {
-                System.out.println("Vui lòng nhập số nguyên.");
+        value = (Config.getScannerInput()).nextLine();
+        if (value.equals("menu")) {
+            menu();
+        } else {
+            try {
+                v = Integer.parseInt(value);
+                if (v < 1 || v > game.getSize()) {
+                    throw new InputException("Vui lòng nhập số nguyên có gía trị từ 1 đến " + game.getSize());
+                }
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+                nhapGiatri();
+            } catch (NumberFormatException e) {
+                mainGame.inputNumberFormatError();
                 nhapGiatri();
             }
         }
     }
     // Getters and Setters
 
-    public MainGame getCmdMainGame() {
+    public MainGame getMainGame() {
         return mainGame;
     }
 
-    public void setCmdMainGame(MainGame mainGame) {
+    public void setMainGame(MainGame mainGame) {
         this.mainGame = mainGame;
     }
-
-    public Scanner getScanner() {
-        return scanner;
-    }
-
-    public void setScanner(Scanner scanner) {
-        this.scanner = scanner;
-    }
-
     public Validate getValidate() {
         return validate;
     }
@@ -217,12 +205,28 @@ public class GameController {
         this.validate = validate;
     }
 
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     public Game getGame() {
         return game;
     }
 
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    public boolean isLoop() {
+        return loop;
+    }
+
+    public void setLoop(boolean loop) {
+        this.loop = loop;
     }
 
     public String getUserName() {
@@ -241,35 +245,75 @@ public class GameController {
         this.typeGame = typeGame;
     }
 
-    public boolean isLoop() {
-        return loop;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setLoop(boolean loop) {
-        this.loop = loop;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
-    public int getRow() {
+    public String getRow() {
         return row;
     }
 
-    public void setRow(int row) {
+    public void setRow(String row) {
         this.row = row;
     }
 
-    public int getCol() {
+    public String getCol() {
         return col;
     }
 
-    public void setCol(int col) {
+    public void setCol(String col) {
         this.col = col;
     }
 
-    public int getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getChoose() {
+        return choose;
+    }
+
+    public void setChoose(String choose) {
+        this.choose = choose;
+    }
+
+    public int getR() {
+        return r;
+    }
+
+    public void setR(int r) {
+        this.r = r;
+    }
+
+    public int getC() {
+        return c;
+    }
+
+    public void setC(int c) {
+        this.c = c;
+    }
+
+    public int getV() {
+        return v;
+    }
+
+    public void setV(int v) {
+        this.v = v;
+    }
+
+    public int getCh() {
+        return ch;
+    }
+
+    public void setCh(int ch) {
+        this.ch = ch;
     }
 }
