@@ -10,9 +10,9 @@ public class TestGameController {
         String path = "src/Data/User/admin/testStageGame.txt";
         GameController gameController = new GameController(HandleData.readDataFromFile(path), "admin");
         gameController.Application();
-        if (Config.getScannerInput() != null) {
-            Config.closeScannerInput();
-        }
+
+        Config.closeScannerInput();
+
         return;
     }
 }
