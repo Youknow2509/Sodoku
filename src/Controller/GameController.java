@@ -133,6 +133,7 @@ public class GameController {
         row = (Config.getScannerInput()).nextLine();
         if (row.equals("menu")) {
             menu();
+            return;
         } else {
             try {
                 r = Integer.parseInt(row);
@@ -153,6 +154,7 @@ public class GameController {
         col = (Config.getScannerInput()).nextLine();
         if (col.equals("menu")) {
             menu();
+            return;
         } else {
             try {
                 c = Integer.parseInt(col);
@@ -173,6 +175,7 @@ public class GameController {
         value = (Config.getScannerInput()).nextLine();
         if (value.equals("menu")) {
             menu();
+            return;
         } else {
             try {
                 v = Integer.parseInt(value);

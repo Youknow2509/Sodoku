@@ -63,6 +63,7 @@ public class UserController {  // TODO tất cả chuyển hiển thị sang Vie
                 case 4:
                     loop = false;
                     System.out.println("Exit !!!");
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Biến c không hợp lệ !!!");
@@ -91,6 +92,7 @@ public class UserController {  // TODO tất cả chuyển hiển thị sang Vie
             path = pathRoot + "/" + user + "/" + nameFile + ".txt";
             gameController = new GameController(HandleData.readDataFromFile(path), user);
             gameController.Application();
+            return;
         }
     }
     // Chơi mới
@@ -99,6 +101,7 @@ public class UserController {  // TODO tất cả chuyển hiển thị sang Vie
         user = Config.getScannerInput().nextLine();
         levelController = new LevelController(user);
         levelController.Application();
+        return;
     }
     // Hiển thị dữ liệu người dùng
     private void showDataUser() {

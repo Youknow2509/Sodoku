@@ -93,6 +93,7 @@ public class LevelController {
         Game game = ChooseGameFromPath(path);
         GameController gameController = new GameController(game, user);
         gameController.Application();
+        return;
     }
     // Choose game from path
     private Game ChooseGameFromPath(String path) {
