@@ -3,6 +3,8 @@ package src.Model;
 import java.io.Serializable;
 
 public class NodeGame implements Serializable {
+    //
+    private static final long serialVersionUID = 1L;
     // Attributes
     private int x = 0;
     private int y = 0;
