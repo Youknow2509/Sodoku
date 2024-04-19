@@ -9,20 +9,20 @@ import src.Utils.HandleFillColorNode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Gam9x9Controller {
+public class GamController {
     // Var Fxml
     @FXML
     private AnchorPane anchorPane;
     // Var
-    public final int SIZE = 9;
+    private int SIZE;
     private List<List<Button>> lNode;
     private List<Button> lNummber;
     public static Button buttonNodeClickedAfter;
 
     // Init
-    @FXML
-    public void initialize() {
+    public void initialize(int SIZE) {
         // Init
+        this.SIZE = SIZE;
         lNode = new ArrayList<>();
         for (int i = 0; i < SIZE; i++) {
             lNode.add(new ArrayList<Button>());
@@ -38,7 +38,7 @@ public class Gam9x9Controller {
     private void addNodeToList() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                String idNode = "#node_" + i + j;
+                String idNode = "#node_" + i +"_" + j;
                 Button node = (Button) anchorPane.lookup(idNode);
                 lNode.get(i).add(j, node);
                 final int row = i;
