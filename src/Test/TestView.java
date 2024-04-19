@@ -12,7 +12,7 @@ public class TestView extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        int SIZE = 9;
+        int SIZE = 16;
         String nameFile = "Game" + SIZE + "x" + SIZE + ".fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/" + nameFile));
         Parent root = loader.load();
