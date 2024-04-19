@@ -9,11 +9,11 @@ import java.util.Map;
 
 public class HandleDataSql {
     // Var
-    private String url = "jdbc:sqlserver://localhost:1435;encrypt=true;trustServerCertificate=true" +
+    private final String url = "jdbc:sqlserver://localhost:1435;encrypt=true;trustServerCertificate=true" +
             ";username=sa" +
             ";password=P@ss12345;";
-    private String myDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private Map<String, List<String>> level = new HashMap<String, List<String>>();
+    private final String myDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private final Map<String, List<String>> level = new HashMap<String, List<String>>();
     // Constructor
     public HandleDataSql() {
     }

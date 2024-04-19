@@ -38,7 +38,7 @@ public class StringToGame {
 
     // String to NodeGame []
     private NodeGame[][] stringToNodeGame(String data) {
-        String lData[] = data.split(" ");
+        String[] lData = data.split(" ");
         int n = (int) Math.sqrt(lData.length);
         NodeGame [][] nodeGames = new NodeGame[n][n];
         // Ex: 164235789385679124297108350412356097536807241879412563620784935758000012903520078

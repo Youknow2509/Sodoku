@@ -1,0 +1,57 @@
+
+.AchorPane {
+    -fx-opacity: 0.5;
+    -fx-background-color: #BCE8EB;
+}
+
+.textMenu {
+    -fx-text-fill: #FFF;
+    -fx-alignment: center;
+    -fx-font-family: "Inter";
+    -fx-font-size: 22px;
+    -fx-font-style: normal;
+    -fx-font-weight: 700;
+    -fx-line-spacing: 10px;
+    -fx-letter-spacing: 0.44px;
+}
+.menu {
+    -fx-background-radius: 40px;
+    -fx-background-color: #2093C5;
+}
+.menu:hover {
+    -fx-background-color: #4A66FB;
+}
+
+.Number {
+     -fx-pref-width: 107px;
+     -fx-pref-height: 140px;
+    -fx-background-radius: 40px;
+    -fx-background-color: #4A66FB;
+}
+
+.textNumber {
+    -fx-text-fill: #E6DBDB;
+    -fx-alignment: center;
+    -fx-font-family: "Inter";
+    -fx-font-size: 50px;
+    -fx-font-style: normal;
+    -fx-font-weight: 700;
+    -fx-line-spacing: normal;
+    -fx-letter-spacing: 1px;
+}
+
+.textNumberGame {
+    -fx-text-fill: #000;
+    -fx-alignment: center;
+    -fx-font-family: "Inter";
+    -fx-font-size: 22px;
+    -fx-font-style: normal;
+    -fx-font-weight: 700;
+    -fx-line-spacing: normal;
+    -fx-letter-spacing: 0.44px;
+}
+
+.game {
+    -fx-alignment: center-right;
+    -fx-spacing: 47px;
+}

@@ -20,6 +20,5 @@ public class TLoadLvSql {
 
         showGame.show();
 
-        return;
     }
 }
