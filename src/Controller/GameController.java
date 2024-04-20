@@ -4,26 +4,30 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import src.Obj.Game;
 import src.Utils.HandleFillColorNode;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GamController {
+public class GameController {
     // Var Fxml
     @FXML
     private AnchorPane anchorPane;
     // Var
     private int SIZE;
+    private Game game;
     private List<List<Button>> lNode;
     private List<Button> lNummber;
     public static Button buttonNodeClickedAfter;
 
     // Init
-    public void initialize(int SIZE) {
+    public void initialize(Game game) {
         // Init
-        this.SIZE = SIZE;
+        this.game = game;
+        this.SIZE = game.getSize();
         lNode = new ArrayList<>();
+
         for (int i = 0; i < SIZE; i++) {
             lNode.add(new ArrayList<Button>());
         }
@@ -41,6 +45,10 @@ public class GamController {
                 String idNode = "#node_" + i +"_" + j;
                 Button node = (Button) anchorPane.lookup(idNode);
                 lNode.get(i).add(j, node);
+
+                // Gắn giá trị của game cho node
+                node.setText(String.valueOf(game.getListNodeGame()[i][j].getValue()));
+
                 final int row = i;
                 final int col = j;
                 node.addEventHandler(MouseEvent.MOUSE_CLICKED,

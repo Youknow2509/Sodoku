@@ -18,23 +18,16 @@ public class Game implements Serializable {
         super();
     }
 
-    public Game(int GameID, int TypeGame, int Level, int Error, NodeGame[][] Data) {
+    public Game(int GameID, int TypeGame, int Level, int Error, int Empty, NodeGame[][] Data) {
         super();
         this.iDGame = GameID;
         this.size = TypeGame;
         this.levelGame = Level;
         this.luotsai = Error;
+        this.otrong = Empty;
         this.listNodeGame = Data;
 
         sizeBox = (int) Math.sqrt(size);
-
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (listNodeGame[i][j].getValue() == 0) {
-                    otrong++;
-                }
-            }
-        }
     }
     public Game(NodeGame [][] listNodeGame, int size, int sizeBox, int otrong, int luotsai) {
         super();
@@ -122,6 +115,12 @@ public class Game implements Serializable {
     }
     public void setData(NodeGame [][] data) {
         setListNodeGame(data);
+    }
+    public int getEmpty() {
+        return getOtrong();
+    }
+    public void setEmpty(int empty) {
+        setOtrong(empty);
     }
     // To String
     @Override

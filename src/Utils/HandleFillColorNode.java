@@ -1,7 +1,7 @@
 package src.Utils;
 
 import javafx.scene.control.Button;
-import src.Controller.GamController;
+import src.Controller.GameController;
 
 import java.util.List;
 
@@ -11,19 +11,19 @@ public class HandleFillColorNode {
     private static String colorFillAfter = "#BCE8EB";
 
     public static void handleFillColorNode(Button Click, int row, int col, List<List<Button>> lNode, int SIZE) {
-        if (GamController.buttonNodeClickedAfter == null) {
+        if (GameController.buttonNodeClickedAfter == null) {
             enableFillColorNode(Click, row, col, lNode, SIZE);
-            GamController.buttonNodeClickedAfter = Click;
+            GameController.buttonNodeClickedAfter = Click;
             System.out.println("-> CLicked == null, Clicked = " + Click);
-        } else if (GamController.buttonNodeClickedAfter == Click) {
+        } else if (GameController.buttonNodeClickedAfter == Click) {
             disableFillColorNode(Click, row, col, lNode, SIZE);
-            GamController.buttonNodeClickedAfter = null;
+            GameController.buttonNodeClickedAfter = null;
             System.out.println("-> CLicked == Click,  Clicked = " + null);
         } else {
-            disableFillColorNode(GamController.buttonNodeClickedAfter, IdToLocation.getIdRow(GamController.buttonNodeClickedAfter.getId())
-                    , IdToLocation.getIdCol(GamController.buttonNodeClickedAfter.getId()), lNode, SIZE);
+            disableFillColorNode(GameController.buttonNodeClickedAfter, IdToLocation.getIdRow(GameController.buttonNodeClickedAfter.getId())
+                    , IdToLocation.getIdCol(GameController.buttonNodeClickedAfter.getId()), lNode, SIZE);
             enableFillColorNode(Click, row, col, lNode, SIZE);
-            GamController.buttonNodeClickedAfter = Click;
+            GameController.buttonNodeClickedAfter = Click;
             System.out.println("-> CLicked != Click, Clicked = " + Click);
         }
     }

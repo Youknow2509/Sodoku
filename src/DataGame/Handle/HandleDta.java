@@ -10,9 +10,9 @@ public interface HandleDta {
     // Them Users
     void addUsers(String username);
     // Them du lieu game chinh
-    void addGame(int typeGame, int level, int err, String data);
+    void addGame(int typeGame, int level, int err, int empty, String data);
     // Them du lieu game nguoi dung
-    void addGameUser(int gameId, int userId, int err, String data);
+    void addGameUser(int gameId, int userId, int err, int empty, String data);
     // Xoa du lieu game chinh
     void deleteGame(int gameId);
     // Xoa du lieu game nguoi dung
@@ -20,9 +20,9 @@ public interface HandleDta {
     // Xoa nguoi dung
     void deleteUser(int userId);
     // Cap nhat du lieu game chinh
-    void updateGame(int gameId, int typeGame, int level, int err, String data);
+    void updateGame(int gameId, int typeGame, int level, int err, int empty, String data);
     // Cap nhat du lieu game nguoi dung
-    void updateGameUser(int gameId, int userId, int err, String data);
+    void updateGameUser(int gameId, int userId, int err, int empty, String data);
     // Cap nhat nguoi dung
     void updateUser(int userId, String username);
     // Lay du lieu game chinh

@@ -12,18 +12,30 @@ public class TestHandleSql {
 
     // Show list string
     private static void showListUser(List<User> list) {
+        if (list.size() == 0) {
+            System.out.println("Khong co du lieu trong bang User");
+            return;
+        }
         for (User s : list) {
             System.out.println(s);
         }
     }
 
     private static void showListGame(List<Game> list) {
+        if (list.size() == 0) {
+            System.out.println("Khong co du lieu trong bang Game");
+            return;
+        }
         for (Game s : list) {
             System.out.println(s);
         }
     }
 
     private static void showListGameUser(List<UserGame> list) {
+        if (list.size() == 0) {
+            System.out.println("Khong co du lieu trong bang UserGame");
+            return;
+        }
         for (UserGame s : list) {
             System.out.println(s);
         }
