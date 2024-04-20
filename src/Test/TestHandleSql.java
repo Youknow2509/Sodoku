@@ -2,14 +2,29 @@ package src.Test;
 
 import src.DataGame.Handle.HandleDataSql;
 import src.DataGame.Handle.HandleDta;
+import src.Obj.Game;
+import src.Obj.User;
+import src.Obj.UserGame;
 
 import java.util.List;
 
 public class TestHandleSql {
 
     // Show list string
-    private static void showListString(List<String> list) {
-        for (String s : list) {
+    private static void showListUser(List<User> list) {
+        for (User s : list) {
+            System.out.println(s);
+        }
+    }
+
+    private static void showListGame(List<Game> list) {
+        for (Game s : list) {
+            System.out.println(s);
+        }
+    }
+
+    private static void showListGameUser(List<UserGame> list) {
+        for (UserGame s : list) {
             System.out.println(s);
         }
     }
@@ -18,9 +33,13 @@ public class TestHandleSql {
     public static void main(String [] arg) {
         HandleDta handleDta = new HandleDataSql();
 
-        List<String> lUsers = handleDta.getUser();
-        List<String> lGame = handleDta.getGame();
-        List<String> lGameUser = handleDta.getGameUser();
+        List<User> lUsers = handleDta.getUser();
+        List<Game> lGame = handleDta.getGame();
+        List<UserGame> lGameUser = handleDta.getGameUser();
+
+        showListUser(lUsers);
+        showListGame(lGame);
+        showListGameUser(lGameUser);
 
         return;
     }

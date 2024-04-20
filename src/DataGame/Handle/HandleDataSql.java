@@ -1,5 +1,10 @@
 package src.DataGame.Handle;
 
+import src.Obj.Game;
+import src.Obj.User;
+import src.Obj.UserGame;
+import src.Utils.StringToData;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -318,12 +323,11 @@ public class HandleDataSql implements HandleDta {
     }
 
     @Override
-    public List<String> getGame() {
+    public List<Game> getGame() {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-        List<String> res = new ArrayList<String>();
-        String gameTemp = "";
+        List<Game> res = new ArrayList<Game>();
         try {
             Class.forName(myDriver);
             connection = getConnection();
@@ -338,9 +342,9 @@ public class HandleDataSql implements HandleDta {
                 int Error = resultSet.getInt("Error");
                 String Data = resultSet.getString("Data");
 
-                gameTemp = GameID + "||" + TypeGame + "||" + Level + "||" + Error + "||" + Data;
+                Game game = new Game(GameID, TypeGame, Level, Error, StringToData.StringToData(Data));
 
-                res.add(gameTemp);
+                res.add(game);
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -364,12 +368,12 @@ public class HandleDataSql implements HandleDta {
     }
 
     @Override
-    public List<String> getGameUser() {
+    public List<UserGame> getGameUser() {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-        List<String> res = new ArrayList<String>();
-        String gameUserTemp = "";
+        List<UserGame> res = new ArrayList<UserGame>();
+
         try {
             Class.forName(myDriver);
             connection = getConnection();
@@ -384,9 +388,9 @@ public class HandleDataSql implements HandleDta {
                 int Error = resultSet.getInt("Error");
                 String Data = resultSet.getString("Data");
 
-                gameUserTemp = GameID + "||" + UserID + "||" + Date + "||" + Error + "||" + Data;
+                UserGame userGame = new UserGame(GameID, UserID, Date, Error, StringToData.StringToData(Data));
 
-                res.add(gameUserTemp);
+                res.add(userGame);
             }
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
@@ -410,12 +414,11 @@ public class HandleDataSql implements HandleDta {
     }
 
     @Override
-    public List<String> getUser() {
+    public List<User> getUser() {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-        List<String> res = new ArrayList<String>();
-        String userTemp = "";
+        List<User> res = new ArrayList<User>();
         try {
             Class.forName(myDriver);
             connection = getConnection();
@@ -427,7 +430,7 @@ public class HandleDataSql implements HandleDta {
                 int UserID = resultSet.getInt("UserID");
                 String UserName = resultSet.getString("UserName");
 
-                userTemp = UserID + "||" + UserName;
+                User userTemp = new User(UserID, UserName);
 
                 res.add(userTemp);
             }

@@ -1,6 +1,6 @@
 package src.Utils;
 
-import src.Model.Game;
+import src.Obj.Game;
 
 public class ShowGame {
     // Var

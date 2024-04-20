@@ -1,5 +1,7 @@
 package src.Model;
 
+import src.Obj.Game;
+
 public class Validate {
     // Var
     private Game game = null;

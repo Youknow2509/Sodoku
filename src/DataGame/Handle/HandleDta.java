@@ -1,5 +1,9 @@
 package src.DataGame.Handle;
 
+import src.Obj.Game;
+import src.Obj.User;
+import src.Obj.UserGame;
+
 import java.util.List;
 
 public interface HandleDta {
@@ -22,9 +26,9 @@ public interface HandleDta {
     // Cap nhat nguoi dung
     void updateUser(int userId, String username);
     // Lay du lieu game chinh
-    List<String> getGame();
+    List<Game> getGame();
     // Lay du lieu game nguoi dung
-    List<String> getGameUser();
+    List<UserGame> getGameUser();
     // Lay nguoi dung
-    List<String> getUser();
+    List<User> getUser();
 }
