@@ -21,4 +21,6 @@
     Java OpenJDK 17.0.10 Corretto
 ## Scene Builder 21.0.0
 
+# Figma: 
+- https://www.figma.com/file/5uljFBQ2N18PUXL189NlnY/Sodoku?type=design&node-id=0%3A1&mode=design&t=IKcUN1p2mMKyHdUQ-1
 
