@@ -29,17 +29,97 @@ public class HandleDataSql implements HandleDta {
     // Method
     @Override
     public void addUsers(String username) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            Class.forName(myDriver);
+            connection = getConnection();
+            String query = "Use Sudoku  INSERT INTO Users (UserName) VALUES (?)";
+            preparedStatement = connection.prepareStatement(query);
 
+            preparedStatement.setString(1, username);
+
+            preparedStatement.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void addGame(int typeGame, int level, int err, String data) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            Class.forName(myDriver);
+            connection = getConnection();
+            String query = "USE Sudoku INSERT INTO Games (TypeGame, Level, Error, Data) " +
+                    "VALUES (?, ?, ?, ?);";
+            preparedStatement = connection.prepareStatement(query);
 
+            preparedStatement.setInt(1, typeGame);
+            preparedStatement.setInt(2, level);
+            preparedStatement.setInt(3, err);
+            preparedStatement.setString(4, data);
+
+            preparedStatement.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void addGameUser(int gameId, int userId, int err, String data) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            Class.forName(myDriver);
+            connection = getConnection();
+            String query = "USE Sudoku INSERT INTO UserGames (GameID, UserID, Error, Data)  " +
+                    "VALUES (?, ?, ?, ?);";
+            preparedStatement = connection.prepareStatement(query);
 
+            preparedStatement.setInt(1, gameId);
+            preparedStatement.setInt(2, userId);
+            preparedStatement.setInt(3, err);
+            preparedStatement.setString(4, data);
+
+            preparedStatement.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -90,15 +170,15 @@ public class HandleDataSql implements HandleDta {
                 int GameID = resultSet.getInt("GameID");
                 int TypeGame = resultSet.getInt("TypeGame");
                 int Level = resultSet.getInt("Level");
-                int Err = resultSet.getInt("Err");
+                int Error = resultSet.getInt("Error");
                 String Data = resultSet.getString("Data");
 
-                gameTemp = GameID + "||" + TypeGame + "||" + Level + "||" + Err + "||" + Data;
+                gameTemp = GameID + "||" + TypeGame + "||" + Level + "||" + Error + "||" + Data;
 
                 res.add(gameTemp);
             }
         } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         } finally {
             // Close the resources
             try {
@@ -136,10 +216,10 @@ public class HandleDataSql implements HandleDta {
                 int GameID = resultSet.getInt("GameID");
                 int UserID = resultSet.getInt("UserID");
                 String Date = resultSet.getString("Data");
-                int Err = resultSet.getInt("Err");
+                int Error = resultSet.getInt("Error");
                 String Data = resultSet.getString("Data");
 
-                gameUserTemp = GameID + "||" + UserID + "||" + Date + "||" + Err + "||" + Data;
+                gameUserTemp = GameID + "||" + UserID + "||" + Date + "||" + Error + "||" + Data;
 
                 res.add(gameUserTemp);
             }
