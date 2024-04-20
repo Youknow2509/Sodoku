@@ -27,6 +27,8 @@ public class TestHandleSql {
         showListString(lGame);
         showListString(lGameUser);
 
+
+        //showListString(handleDta.getGame());
         return;
     }
 }

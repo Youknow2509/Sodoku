@@ -124,17 +124,96 @@ public class HandleDataSql implements HandleDta {
 
     @Override
     public void deleteGame(int gameId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            Class.forName(myDriver);
+            connection = getConnection();
 
+            String queryUserGames = "USE Sudoku DELETE FROM UserGames WHERE GameID = ?;";
+            preparedStatement = connection.prepareStatement(queryUserGames);
+            preparedStatement.setInt(1, gameId);
+            preparedStatement.executeUpdate();
+
+            String queryGames = "USE Sudoku DELETE FROM Games WHERE GameID = ?;";
+            preparedStatement = connection.prepareStatement(queryGames);
+            preparedStatement.setInt(1, gameId);
+            preparedStatement.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void deleteGameUser(int gameId, int userId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            Class.forName(myDriver);
+            connection = getConnection();
+            String query = "USE Sudoku DELETE FROM UserGames \n" +
+                    "WHERE GameID = ? AND UserID = ?;";
+            preparedStatement = connection.prepareStatement(query);
 
+            preparedStatement.setInt(1, gameId);
+            preparedStatement.setInt(2, userId);
+
+            preparedStatement.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void deleteUser(int userId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            Class.forName(myDriver);
+            connection = getConnection();
+            String query = "USE Sudoku DELETE FROM Users \n" +
+                    "WHERE UserID = ?;";
+            preparedStatement = connection.prepareStatement(query);
 
+            preparedStatement.setInt(1, userId);
+
+            preparedStatement.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

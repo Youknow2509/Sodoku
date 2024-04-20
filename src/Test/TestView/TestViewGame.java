@@ -13,7 +13,7 @@ public class TestViewGame extends Application {
     public void start(Stage stage) throws Exception {
         int SIZE = 16;
         String nameFile = "Game" + SIZE + "x" + SIZE + ".fxml";
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/" + nameFile));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../../View/" + nameFile));
         Parent root = loader.load();
         GamController controller = loader.getController();
         controller.initialize(SIZE);
