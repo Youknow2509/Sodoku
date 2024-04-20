@@ -22,13 +22,6 @@ public class TestHandleSql {
         List<String> lGame = handleDta.getGame();
         List<String> lGameUser = handleDta.getGameUser();
 
-
-        showListString(lUsers);
-        showListString(lGame);
-        showListString(lGameUser);
-
-
-        //showListString(handleDta.getGame());
         return;
     }
 }

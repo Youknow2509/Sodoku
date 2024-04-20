@@ -18,7 +18,7 @@ public interface HandleDta {
     // Cap nhat du lieu game chinh
     void updateGame(int gameId, int typeGame, int level, int err, String data);
     // Cap nhat du lieu game nguoi dung
-    void updateGameUser(int gameId, int userId, int typeGame, int err, String data);
+    void updateGameUser(int gameId, int userId, int err, String data);
     // Cap nhat nguoi dung
     void updateUser(int userId, String username);
     // Lay du lieu game chinh

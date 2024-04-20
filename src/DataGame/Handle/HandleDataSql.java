@@ -218,17 +218,103 @@ public class HandleDataSql implements HandleDta {
 
     @Override
     public void updateGame(int gameId, int typeGame, int level, int err, String data) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            Class.forName(myDriver);
+            connection = getConnection();
+            String query = "USE Sudoku UPDATE Games \n" +
+                    "SET TypeGame = ?, Level = ?, Error = ?, Data = ? \n" +
+                    "WHERE GameID = ?;";
+            preparedStatement = connection.prepareStatement(query);
 
+            preparedStatement.setInt(1, typeGame);
+            preparedStatement.setInt(2, level);
+            preparedStatement.setInt(3, err);
+            preparedStatement.setString(4, data);
+            preparedStatement.setInt(5, gameId);
+
+            preparedStatement.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
-    public void updateGameUser(int gameId, int userId, int typeGame, int err, String data) {
+    public void updateGameUser(int gameId, int userId, int err, String data) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            Class.forName(myDriver);
+            connection = getConnection();
+            String query = "USE Sudoku UPDATE UserGames \n" +
+                    "SET Error = ? , Data = ? \n" +
+                    "WHERE GameID = ? AND UserID = ?;";
+            preparedStatement = connection.prepareStatement(query);
 
+            preparedStatement.setInt(1, err);
+            preparedStatement.setString(2, data);
+            preparedStatement.setInt(3, gameId);
+            preparedStatement.setInt(4, userId);
+
+            preparedStatement.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void updateUser(int userId, String username) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            Class.forName(myDriver);
+            connection = getConnection();
+            String query = "USE Sudoku UPDATE Users \n" +
+                    "SET UserName = ? \n" +
+                    "WHERE UserID = ?;";
+            preparedStatement = connection.prepareStatement(query);
 
+            preparedStatement.setString(1, username);
+            preparedStatement.setInt(2, userId);
+
+            preparedStatement.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -294,7 +380,7 @@ public class HandleDataSql implements HandleDta {
             while (resultSet.next()) {
                 int GameID = resultSet.getInt("GameID");
                 int UserID = resultSet.getInt("UserID");
-                String Date = resultSet.getString("Data");
+                String Date = resultSet.getDate("Date").toString();
                 int Error = resultSet.getInt("Error");
                 String Data = resultSet.getString("Data");
 
