@@ -22,7 +22,7 @@ public class TestViewGame extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../../View/" + nameFile));
         Parent root = loader.load();
         GameController controller = loader.getController();
-        controller.initialize(CoppyValueNodeGame.coppyGame(handleDta.getGame().get(0)));
+        controller.initialize(CoppyValueNodeGame.coppyGame(handleDta.getGame().get(1)));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("Test View");

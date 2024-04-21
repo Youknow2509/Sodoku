@@ -12,6 +12,7 @@ import src.Obj.Game;
 import src.Utils.HandleFillColorNode;
 import src.Utils.IdToLocation;
 
+import javax.swing.text.html.ImageView;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,6 @@ public class GameController {
     // Var Fxml
     @FXML
     private AnchorPane anchorPane;
-    @FXML
-    private Pane menu;
     @FXML
     private TextField health;
 

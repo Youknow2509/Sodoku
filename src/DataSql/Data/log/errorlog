@@ -153,3 +153,6 @@
 2024-04-21 16:20:30.43 spid75      Using 'xpstar.dll' version '2022.160.4105' to execute extended stored procedure 'xp_instance_regread'. This is an informational message only; no user action is required.
 2024-04-21 16:20:49.95 spid77      XE session 'telemetry_xevents' stopping.
 2024-04-21 16:20:49.96 spid77      XE session 'telemetry_xevents' started.
+2024-04-21 16:27:55.78 spid77      Using 'dbghelp.dll' version '4.0.5'
+2024-04-21 16:40:01.89 spid57      XE session 'telemetry_xevents' stopping.
+2024-04-21 16:40:01.90 spid57      XE session 'telemetry_xevents' started.
