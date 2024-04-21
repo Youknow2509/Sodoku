@@ -5,16 +5,22 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import src.DataGame.Handle.HandleData;
 import src.DataGame.Handle.HandleDataSql;
+import src.Obj.Game;
 import src.Obj.UserGame;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -78,10 +84,19 @@ public class ListGameUsersController implements Initializable {
         }
     }
     // Play
-    public void play(MouseEvent event) {
+    public void play(MouseEvent event) throws IOException {
         UserGame userGame = tableView.getSelectionModel().getSelectedItem();
         if (userGame != null) {
-
+            // todo
+            Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/src/View/Game" + userGame.getTypeGame() + "x" + userGame.getTypeGame() + ".fxml"));
+            Parent studentViewParent = loader.load();
+            Scene scene = new Scene(studentViewParent);
+            GameController controller = loader.getController();
+            controller.initialize(new Game(userGame.getIdGame(), userGame.getTypeGame(), 1, userGame.getError(), userGame.getEmpty(), userGame.getData()));
+            stage.setScene(scene);
         }
+
     }
 }
