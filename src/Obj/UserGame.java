@@ -9,6 +9,7 @@ public class UserGame {
     private int idUser;
     private int idGame;
     private String date;
+    private String name;
     private int error;
     private NodeGame [][] data;
 
@@ -17,10 +18,11 @@ public class UserGame {
         super();
     }
 
-    public UserGame(int idUser, int idGame, String date, int error, NodeGame[][] data) {
+    public UserGame(int idUser, int idGame, String name, String date, int error, NodeGame[][] data) {
         super();
         this.idUser = idUser;
         this.idGame = idGame;
+        this.name = name;
         this.date = date;
         this.error = error;
         this.data = data;
@@ -65,6 +67,14 @@ public class UserGame {
 
     public void setData(NodeGame[][] data) {
         this.data = data;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     // To String
