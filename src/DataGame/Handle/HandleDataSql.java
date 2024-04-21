@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HandleDataSql implements HandleDta {
+public class HandleDataSql implements HandleData {
     // Var final sql
     private final String url = "jdbc:sqlserver://localhost:1435;encrypt=true;trustServerCertificate=true" +
             ";username=sa" +
@@ -96,22 +96,23 @@ public class HandleDataSql implements HandleDta {
     }
 
     @Override
-    public void addGameUser(int gameId, int userId, String name, int err, int empty, String data) {
+    public void addGameUser(int gameId, int userId, String name, int typeGame, int err, int empty, String data) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
             Class.forName(myDriver);
             connection = getConnection();
-            String query = "USE Sudoku INSERT INTO UserGames (GameID, UserID, Name, Error, Empty, Data)  " +
-                    "VALUES (?, ?, ?, ?, ?, ?);";
+            String query = "USE Sudoku INSERT INTO UserGames (GameID, UserID, Name, TypeGame, Error, Empty, Data)  " +
+                    "VALUES (?, ?, ? ?, ?, ?, ?);";
             preparedStatement = connection.prepareStatement(query);
 
             preparedStatement.setInt(1, gameId);
             preparedStatement.setInt(2, userId);
             preparedStatement.setString(3, name);
-            preparedStatement.setInt(4, err);
-            preparedStatement.setInt(5, empty);
-            preparedStatement.setString(6, data);
+            preparedStatement.setInt(4, typeGame);
+            preparedStatement.setInt(5, err);
+            preparedStatement.setInt(6, empty);
+            preparedStatement.setString(7, data);
 
             preparedStatement.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {
@@ -261,23 +262,25 @@ public class HandleDataSql implements HandleDta {
     }
 
     @Override
-    public void updateGameUser(int gameId, int userId, String name, int err, int empty, String data) {
+    public void updateGameUser(int gameId, int userId, String name, int typeGame, String date, int err, int empty, String data) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
             Class.forName(myDriver);
             connection = getConnection();
             String query = "USE Sudoku UPDATE UserGames \n" +
-                    "SET Name = ?, Error = ? , Empty = ?, Data = ? \n" +
+                    "SET Name = ?, TypeGame = ?, Date = ?, Error = ? , Empty = ?, Data = ? \n" +
                     "WHERE GameID = ? AND UserID = ?;";
             preparedStatement = connection.prepareStatement(query);
 
             preparedStatement.setString(1, name);
-            preparedStatement.setInt(2, err);
-            preparedStatement.setInt(3, empty);
-            preparedStatement.setString(4, data);
-            preparedStatement.setInt(5, gameId);
-            preparedStatement.setInt(6, userId);
+            preparedStatement.setInt(2, typeGame);
+            preparedStatement.setString(3, date);
+            preparedStatement.setInt(4, err);
+            preparedStatement.setInt(5, empty);
+            preparedStatement.setString(6, data);
+            preparedStatement.setInt(7, gameId);
+            preparedStatement.setInt(8, userId);
 
             preparedStatement.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {
@@ -392,11 +395,13 @@ public class HandleDataSql implements HandleDta {
                 int GameID = resultSet.getInt("GameID");
                 int UserID = resultSet.getInt("UserID");
                 String Name = resultSet.getString("Name");
+                int TypeGame = resultSet.getInt("TypeGame");
                 String Date = resultSet.getDate("Date").toString();
                 int Error = resultSet.getInt("Error");
+                int Empty = resultSet.getInt("Empty");
                 String Data = resultSet.getString("Data");
 
-                UserGame userGame = new UserGame(GameID, UserID, Name, Date, Error, String_Data.StringToData(Data));
+                UserGame userGame = new UserGame(GameID, UserID, Name, TypeGame, Date, Error, Empty, String_Data.StringToData(Data));
 
                 res.add(userGame);
             }

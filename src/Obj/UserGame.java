@@ -9,8 +9,10 @@ public class UserGame {
     private int idUser;
     private int idGame;
     private String date;
+    private int typeGame;
     private String name;
     private int error;
+    private int empty;
     private NodeGame [][] data;
 
     // Constructor
@@ -18,13 +20,15 @@ public class UserGame {
         super();
     }
 
-    public UserGame(int idUser, int idGame, String name, String date, int error, NodeGame[][] data) {
+    public UserGame(int idUser, int idGame, String name, int typeGame, String date, int error, int empty, NodeGame[][] data) {
         super();
         this.idUser = idUser;
         this.idGame = idGame;
         this.name = name;
+        this.typeGame = typeGame;
         this.date = date;
         this.error = error;
+        this.empty = empty;
         this.data = data;
     }
 
@@ -75,6 +79,22 @@ public class UserGame {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getTypeGame() {
+        return typeGame;
+    }
+
+    public void setTypeGame(int typeGame) {
+        this.typeGame = typeGame;
+    }
+
+    public int getEmpty() {
+        return empty;
+    }
+
+    public void setEmpty(int empty) {
+        this.empty = empty;
     }
 
     // To String

@@ -1,11 +1,13 @@
 package src.Test;
 
 import src.DataGame.Handle.HandleDataSql;
-import src.DataGame.Handle.HandleDta;
+import src.DataGame.Handle.HandleData;
 import src.Obj.Game;
 import src.Obj.User;
 import src.Obj.UserGame;
+import src.Utils.GetTimeCurrent;
 
+import java.util.Date;
 import java.util.List;
 
 public class TestHandleSql {
@@ -43,11 +45,11 @@ public class TestHandleSql {
 
     // Main
     public static void main(String [] arg) {
-        HandleDta handleDta = new HandleDataSql();
+        HandleData handleData = new HandleDataSql();
 
-        List<User> lUsers = handleDta.getUser();
-        List<Game> lGame = handleDta.getGame();
-        List<UserGame> lGameUser = handleDta.getGameUser();
+        List<User> lUsers = handleData.getUser();
+        List<Game> lGame = handleData.getGame();
+        List<UserGame> lGameUser = handleData.getGameUser();
 
         showListUser(lUsers);
         showListGame(lGame);
