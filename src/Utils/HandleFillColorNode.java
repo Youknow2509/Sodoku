@@ -14,17 +14,14 @@ public class HandleFillColorNode {
         if (GameController.buttonNodeClickedAfter == null) {
             enableFillColorNode(Click, row, col, lNode, SIZE);
             GameController.buttonNodeClickedAfter = Click;
-            System.out.println("-> CLicked == null, Clicked = " + Click);
         } else if (GameController.buttonNodeClickedAfter == Click) {
             disableFillColorNode(Click, row, col, lNode, SIZE);
             GameController.buttonNodeClickedAfter = null;
-            System.out.println("-> CLicked == Click,  Clicked = " + null);
         } else {
             disableFillColorNode(GameController.buttonNodeClickedAfter, IdToLocation.getIdRow(GameController.buttonNodeClickedAfter.getId())
                     , IdToLocation.getIdCol(GameController.buttonNodeClickedAfter.getId()), lNode, SIZE);
             enableFillColorNode(Click, row, col, lNode, SIZE);
             GameController.buttonNodeClickedAfter = Click;
-            System.out.println("-> CLicked != Click, Clicked = " + Click);
         }
     }
 
