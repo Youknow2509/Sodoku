@@ -16,13 +16,13 @@ public class TestViewGame extends Application {
     public void start(Stage stage) throws Exception {
 
         HandleDta handleDta = new HandleDataSql();
-        int SIZE = 16;
+        int SIZE = 9;
         String nameFile = "Game" + SIZE + "x" + SIZE + ".fxml";
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../../View/" + nameFile));
         Parent root = loader.load();
         GameController controller = loader.getController();
-        controller.initialize(CoppyValueNodeGame.coppyGame(handleDta.getGame().get(12)));
+        controller.initialize(CoppyValueNodeGame.coppyGame(handleDta.getGame().get(0)));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("Test View");

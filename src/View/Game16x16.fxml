@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -12,7 +16,7 @@
 
 <AnchorPane fx:id="anchorPane" maxHeight="1024.0" maxWidth="1440.0" minHeight="1024.0" minWidth="1440.0" prefHeight="1024.0" prefWidth="1440.0" styleClass="AchorPane" stylesheets="@CSS/styleGame16x16.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.Controller.GameController">
     <children>
-        <Pane fx:id="menu" layoutX="30.0" layoutY="21.0" prefHeight="60.0" prefWidth="192.0" styleClass="menu">
+        <Pane fx:id="menu" layoutX="30.0" layoutY="21.0" onMouseClicked="#handleClickMenu" prefHeight="60.0" prefWidth="192.0" styleClass="menu">
             <children>
                 <Text layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textMenu" text="Menu" x="65.0" y="17.0" />
             </children>
@@ -429,5 +433,18 @@
                 </GridPane>
             </children>
         </HBox>
+      <HBox alignment="CENTER" layoutX="1247.0" layoutY="21.0" maxHeight="60.0" minHeight="60.0" prefHeight="60.0">
+         <children>
+            <TextField fx:id="health" alignment="CENTER" editable="false" maxHeight="60.0" maxWidth="80.0" minHeight="60.0" minWidth="80.0" prefHeight="60.0" prefWidth="80.0" style="-fx-background-color: #BCE8EB;" styleClass="textNumberGame" text="10" HBox.hgrow="ALWAYS">
+               <cursor>
+                  <Cursor fx:constant="WAIT" />
+               </cursor></TextField>
+            <ImageView fitHeight="60.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+               <image>
+                  <Image url="@../../ass/heart-solid.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
     </children>
 </AnchorPane>

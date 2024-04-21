@@ -2,11 +2,17 @@ package src.Controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import src.Model.NodeGame;
+import src.Model.Validate;
 import src.Obj.Game;
 import src.Utils.HandleFillColorNode;
+import src.Utils.IdToLocation;
 
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +20,15 @@ public class GameController {
     // Var Fxml
     @FXML
     private AnchorPane anchorPane;
+    @FXML
+    private Pane menu;
+    @FXML
+    private TextField health;
+
     // Var
     private int SIZE;
     private Game game;
+    private Validate validate;
     private List<List<Button>> lNode;
     private List<Button> lNummber;
     public static Button buttonNodeClickedAfter;
@@ -25,8 +37,13 @@ public class GameController {
     public void initialize(Game game) {
         // Init
         this.game = game;
+        validate = new Validate(game);
+
         this.SIZE = game.getSize();
         lNode = new ArrayList<>();
+
+        // Set health
+        health.setText(String.valueOf(game.getError()));
 
         for (int i = 0; i < SIZE; i++) {
             lNode.add(new ArrayList<Button>());
@@ -38,6 +55,30 @@ public class GameController {
         addNummberToList();
     }
 
+    // Game Check
+    public void gameCheck() {
+        if (game.getEmpty() <= 0) {
+            // Check Win
+            System.out.println("Win");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.exit(0);
+        }
+        if (game.getError() < 0) {
+            // Check Lose
+            System.out.println("Lose");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.exit(0);
+        }
+    }
+
     // Add Node
     private void addNodeToList() {
         for (int i = 0; i < SIZE; i++) {
@@ -47,7 +88,12 @@ public class GameController {
                 lNode.get(i).add(j, node);
 
                 // Gắn giá trị của game cho node
-                node.setText(String.valueOf(game.getListNodeGame()[i][j].getValue()));
+                if (game.getListNodeGame()[i][j].getValue() != 0) {
+                    node.setText(String.valueOf(game.getListNodeGame()[i][j].getValue()));
+                } else {
+                    node.setText("");
+                }
+
 
                 final int row = i;
                 final int col = j;
@@ -76,15 +122,34 @@ public class GameController {
     private void handleClickNode(MouseEvent e, int row, int col) {
         Button node = (Button) e.getSource();
         String idNode = node.getId();
-        System.out.println(idNode);
         HandleFillColorNode.handleFillColorNode(node, row, col, lNode, SIZE);
     }
 
     // Handle Click Number
     private void handleClickNumber(MouseEvent e) {
         Button number = (Button) e.getSource();
-        String idNumber = number.getId();
-        System.out.println(idNumber);
+        int n = Integer.parseInt(number.getText());
+        if (buttonNodeClickedAfter != null && buttonNodeClickedAfter.getText() == "") {
+            if (validate.ValidateSafe(new NodeGame(
+                    IdToLocation.getIdRow(buttonNodeClickedAfter.getId()),
+                    IdToLocation.getIdCol(buttonNodeClickedAfter.getId()),
+                    n)
+            )) {
+                buttonNodeClickedAfter.setText(String.valueOf(n));
+                game.setEmpty(game.getEmpty() - 1);
+            } else {
+                game.setError(game.getError() - 1);
+                health.setText(String.valueOf(game.getError()));
+            }
+            HandleFillColorNode.disableFillColorNode(buttonNodeClickedAfter,
+                    IdToLocation.getIdRow(buttonNodeClickedAfter.getId()),
+                    IdToLocation.getIdCol(buttonNodeClickedAfter.getId()), lNode, SIZE);
+            gameCheck();
+        }
     }
 
+    // Handle Click Menu
+    public void handleClickMenu(MouseEvent event) {
+        System.exit(0);
+    }
 }

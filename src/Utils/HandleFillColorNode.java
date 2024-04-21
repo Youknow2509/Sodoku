@@ -31,7 +31,7 @@ public class HandleFillColorNode {
         fillCol(row, col, SIZE, lNode, colorFill);
     }
 
-    private static void disableFillColorNode(Button Click, int row, int col, List<List<Button>> lNode, int SIZE) {
+    public static void disableFillColorNode(Button Click, int row, int col, List<List<Button>> lNode, int SIZE) {
         fillBox(row, col, SIZE, lNode, colorFillAfter);
         fillRow(row, col, SIZE, lNode, colorFillAfter);
         fillCol(row, col, SIZE, lNode, colorFillAfter);
