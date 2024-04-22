@@ -1,7 +1,7 @@
 package src.Utils;
 
 import javafx.scene.control.Button;
-import src.Controller.GameController;
+import src.Controller.Game.GameController;
 
 import java.util.List;
 

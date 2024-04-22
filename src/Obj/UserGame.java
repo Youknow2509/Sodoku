@@ -1,5 +1,7 @@
 package src.Obj;
 
+import src.DataGame.Handle.HandleData;
+import src.DataGame.Handle.HandleDataSql;
 import src.Model.NodeGame;
 
 import java.util.Arrays;
@@ -16,11 +18,9 @@ public class UserGame {
     private int empty;
     private NodeGame [][] data;
 
-    // Constructor
-    public UserGame() {
-        super();
-    }
+    private HandleData handleData;
 
+    // Constructor
     public UserGame(int idUserGame , int idUser, int idGame, String name, int typeGame, String date, int error, int empty, NodeGame[][] data) {
         super();
         this.idUserGame = idUserGame;
@@ -32,8 +32,22 @@ public class UserGame {
         this.error = error;
         this.empty = empty;
         this.data = data;
+
+        handleData = new HandleDataSql();
     }
 
+    // Get Game
+    public Game getGame() {
+        Game game = handleData.getGameById(idGame);
+        game.setError(error);
+        game.setEmpty(empty);
+        game.setListNodeGame(data);
+        return game;
+    }
+    // Get User
+    public User getUser() {
+        return handleData.getUserById(idUser);
+    }
     // Getters and Setters
     public int getIdUserGame() {
         return idUserGame;

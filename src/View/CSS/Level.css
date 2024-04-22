@@ -1,0 +1,46 @@
+.bg {
+    -fx-pref-width: 600px;
+    -fx-pref-height: 700px;
+    -fx-background-color: #2093C5;
+}
+
+.btn {
+    -fx-pref-width: 160px;
+    -fx-pref-height: 50px;
+    -fx-padding: 4px 53px 4px 47px;
+    -fx-alignment: center;
+    -fx-background-radius: 40px;
+    -fx-background-color: #39B0C0;
+}
+
+.btn:hover {
+    -fx-opacity: 0.2;
+}
+
+.btn: preesed {
+    -fx-opacity: 0;
+}
+
+.text {
+    -fx-pref-width: 60px;
+    -fx-pref-height: 50px;
+    -fx-alignment: center;
+    -fx-text-fill: #FFF;
+    -fx-font-family: "Inter";
+    -fx-font-size: 16px;
+    -fx-font-style: normal;
+    -fx-font-weight: bold;
+    -fx-letter-spacing: 0.4px;
+}
+
+.text2 {
+    -fx-pref-width: 134px;
+        -fx-pref-height: 41px;
+        -fx-alignment: center;
+        -fx-text-fill: #FFF;
+        -fx-font-family: "Inter";
+        -fx-font-size: 30px;
+        -fx-font-style: normal;
+        -fx-font-weight: bold;
+        -fx-letter-spacing: 0.6px;
+}

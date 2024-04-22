@@ -15,10 +15,6 @@ public class Game implements Serializable {
     private int iDGame;
     private int levelGame;
     // Constructor
-    public Game() {
-        super();
-    }
-
     public Game(int GameID, int TypeGame, int Level, int Error, int Empty, NodeGame[][] Data) {
         super();
         this.iDGame = GameID;

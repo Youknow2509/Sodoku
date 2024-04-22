@@ -1,13 +1,10 @@
 package src.Test.TestView;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import src.Controller.GameController;
-import src.Utils.CoppyValueNodeGame;
 
 public class TestViewListGameUsers extends Application {
 
@@ -20,6 +17,8 @@ public class TestViewListGameUsers extends Application {
         stage.setScene(scene);
         stage.setTitle("Test View");
         stage.show();
+        stage.centerOnScreen();
+        stage.setResizable(false);
     }
 
     public static void main(String[] args) {

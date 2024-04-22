@@ -80,7 +80,7 @@ public class EditGameUserController {
                     , userGame.getName()
                     , userGame.getTypeGame(), userGame.getDate(), userGame.getError(), userGame.getEmpty()
                     , String_Data.DataToString(userGame.getData()));
-            
+
             // Debug
 //            System.out.println("Update game user: " + "\n IDGameUser: " + userGame.getIdUserGame()
 //                        + "\n IDGame: " + userGame.getIdGame() + "\n IDUser: " + userGame.getIdUser()
@@ -90,6 +90,7 @@ public class EditGameUserController {
             tableView.refresh();
 
             closePopup();
+
         }
     }
 

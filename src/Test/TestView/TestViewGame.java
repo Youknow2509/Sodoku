@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import src.Controller.GameController;
+import src.Controller.Game.GameController;
 import src.DataGame.Handle.HandleDataSql;
 import src.DataGame.Handle.HandleData;
 import src.Utils.CoppyValueNodeGame;
@@ -22,11 +22,13 @@ public class TestViewGame extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../../View/" + nameFile));
         Parent root = loader.load();
         GameController controller = loader.getController();
-        controller.initialize(CoppyValueNodeGame.coppyGame(handleData.getGame().get(1)));
+         // controller.initialize(); todo add param
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("Test View");
         stage.show();
+        stage.centerOnScreen();
+        stage.setResizable(false);
     }
 
     public static void main(String[] args) {

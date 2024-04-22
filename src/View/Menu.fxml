@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox alignment="CENTER" maxHeight="300.0" maxWidth="250.0" minHeight="300.0" minWidth="250.0" prefHeight="300.0" prefWidth="250.0" styleClass="menuBG" stylesheets="@CSS/Menu.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.Controller.MenuController">
+<HBox alignment="CENTER" maxHeight="300.0" maxWidth="250.0" minHeight="300.0" minWidth="250.0" prefHeight="300.0" prefWidth="250.0" styleClass="menuBG" stylesheets="@CSS/Menu.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.Controller.Game.MenuController">
    <children>
       <VBox alignment="CENTER" maxHeight="211.0" maxWidth="110.0" minHeight="211.0" minWidth="110.0" prefHeight="211.0" prefWidth="110.0" spacing="25.0" HBox.hgrow="ALWAYS">
          <children>

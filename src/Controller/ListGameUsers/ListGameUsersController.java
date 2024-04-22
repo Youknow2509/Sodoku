@@ -16,10 +16,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import src.Controller.GameController;
+import src.Controller.Game.GameController;
 import src.DataGame.Handle.HandleData;
 import src.DataGame.Handle.HandleDataSql;
 import src.Obj.Game;
+import src.Obj.User;
 import src.Obj.UserGame;
 
 import java.io.IOException;
@@ -99,6 +100,8 @@ public class ListGameUsersController implements Initializable {
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setScene(new Scene(root));
             popupStage.showAndWait();
+            popupStage.centerOnScreen();
+            popupStage.setResizable(false);
         }
     }
 
@@ -106,14 +109,34 @@ public class ListGameUsersController implements Initializable {
     public void play(MouseEvent event) throws IOException {
         UserGame userGame = tableView.getSelectionModel().getSelectedItem();
         if (userGame != null) {
+            User user = handleData.getUserById(userGame.getIdUser());
+            Game game = handleData.getGameById(userGame.getIdGame());
+
             Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/src/View/Game" + userGame.getTypeGame() + "x" + userGame.getTypeGame() + ".fxml"));
+            loader.setLocation(getClass().getResource("/src/View/Game/Game" + userGame.getTypeGame() + "x" + userGame.getTypeGame() + ".fxml"));
             Parent studentViewParent = loader.load();
             Scene scene = new Scene(studentViewParent);
+
             GameController controller = loader.getController();
-            controller.initialize(new Game(userGame.getIdGame(), userGame.getTypeGame(), 1, userGame.getError(), userGame.getEmpty(), userGame.getData()));
+            controller.initialize(user, game);
+
             stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.setResizable(false);
+        }
+    }
+
+    // Back
+    public void back(MouseEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/src/View/Home.fxml"));
+            Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.centerOnScreen();
+            stage.setResizable(false);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -31,4 +31,14 @@ public interface HandleData {
     List<UserGame> getGameUser();
     // Lay nguoi dung
     List<User> getUser();
+    // Get MaxID
+    int getMaxID(String table);
+    // Get User by ID
+    User getUserById(int id);
+    // Get Game by ID
+    Game getGameById(int id);
+    // Get UserGame by ID
+    UserGame getUserGameById(int id);
+    // Get Game by TypeGame and Level
+    List<Game> getGameByTypeGameAndLevel(int typeGame, int level);
 }

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="1024.0" maxWidth="1440.0" minHeight="1024.0" minWidth="1440.0" onMouseClicked="#handleClickMenu" prefHeight="1024.0" prefWidth="1440.0" styleClass="AchorPane" stylesheets="@../CSS/styleGame9x9.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.Controller.GameController">
+<AnchorPane fx:id="anchorPane" maxHeight="1024.0" maxWidth="1440.0" minHeight="1024.0" minWidth="1440.0" onMouseClicked="#handleClickMenu" prefHeight="1024.0" prefWidth="1440.0" styleClass="AchorPane" stylesheets="@../CSS/styleGame9x9.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.Controller.Game.GameController">
     <children>
       <ImageView fx:id="btnMenu" fitHeight="62.0" fitWidth="54.41" layoutX="19.0" pickOnBounds="true" preserveRatio="true" styleClass="menu" x="28.0" y="21.0">
          <image>

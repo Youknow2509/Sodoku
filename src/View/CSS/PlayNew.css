@@ -1,0 +1,32 @@
+.bg {
+    -fx-pref-width: 550px;
+        -fx-pref-height: 600px;
+        -fx-background-color: #A3F9C0;
+}
+
+.btn {
+    -fx-background-radius: 40px;
+        -fx-background-color: #AC7E7E;
+    -fx-pref-width: 250px;
+        -fx-pref-height: 78px;
+        -fx-alignment: center;
+}
+
+.btn: hover {
+    -fx-opacity: 0.2;
+}
+
+.btn: pressed {
+    -fx-opacity: 0;
+}
+
+.text {
+    -fx-pref-width: 208px;
+        -fx-pref-height: 50px;
+        -fx-alignment: center;
+        -fx-text-fill: #000;
+        -fx-font-family: "Inter";
+        -fx-font-size: 16px;
+        -fx-font-style: normal;
+        -fx-font-weight: bold;
+}

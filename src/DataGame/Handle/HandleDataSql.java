@@ -468,4 +468,230 @@ public class HandleDataSql implements HandleData {
         }
         return res;
     }
+
+    @Override
+    public int getMaxID(String table) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int res = 0;
+        try {
+            Class.forName(myDriver);
+            connection = getConnection();
+            // Query
+            String query = "Use Sudoku SELECT MAX(?) as IDMax FROM ? ;";
+            preparedStatement = connection.prepareStatement(query);
+            if (table.equals("Users")) {
+                preparedStatement.setString(1, "UserID");
+                preparedStatement.setString(2, "Users");
+            } else if (table.equals("Games")) {
+                preparedStatement.setString(1, "GameID");
+                preparedStatement.setString(2, "Games");
+            } else if (table.equals("UserGames")) {
+                preparedStatement.setString(1, "UserGamesID");
+                preparedStatement.setString(2, "UserGames");
+            }
+
+            preparedStatement.executeQuery();
+            res = resultSet.getInt("IDMax");
+
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // Close the resources
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return res;
+    }
+
+    @Override
+    public User getUserById(int id) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        User res = null;
+        try {
+            Class.forName(myDriver);
+            connection = getConnection();
+            // Query
+            String query = "Use Sudoku SELECT * FROM Users WHERE UserID = ?;";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int UserID = resultSet.getInt("UserID");
+                String UserName = resultSet.getString("UserName");
+
+                res = new User(UserID, UserName);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // Close the resources
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return res;
+    }
+
+    @Override
+    public Game getGameById(int id) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Game res = null;
+        try {
+            Class.forName(myDriver);
+            connection = getConnection();
+            // Query
+            String query = "Use Sudoku SELECT * FROM Games WHERE GameID = ?;";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int GameID = resultSet.getInt("GameID");
+                int TypeGame = resultSet.getInt("TypeGame");
+                int Level = resultSet.getInt("Level");
+                int Error = resultSet.getInt("Error");
+                int Empty = resultSet.getInt("Empty");
+                String Data = resultSet.getString("Data");
+
+                res = new Game(GameID, TypeGame, Level, Error, Empty, String_Data.StringToData(Data));
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // Close the resources
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return res;
+    }
+
+    @Override
+    public UserGame getUserGameById(int id) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        UserGame res = null;
+        try {
+            Class.forName(myDriver);
+            connection = getConnection();
+            // Query
+            String query = "Use Sudoku SELECT * FROM UserGames WHERE UserGamesID = ?;";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int UserGamesID = resultSet.getInt("UserGamesID");
+                int GameID = resultSet.getInt("GameID");
+                int UserID = resultSet.getInt("UserID");
+                String Name = resultSet.getString("Name");
+                int TypeGame = resultSet.getInt("TypeGame");
+                String Date = resultSet.getDate("Date").toString();
+                int Error = resultSet.getInt("Error");
+                int Empty = resultSet.getInt("Empty");
+                String Data = resultSet.getString("Data");
+
+                res = new UserGame(UserGamesID, UserID, GameID, Name, TypeGame, Date, Error, Empty, String_Data.StringToData(Data));
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // Close the resources
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return res;
+    }
+
+    @Override
+    public List<Game> getGameByTypeGameAndLevel(int typeGame, int level) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Game> res = new ArrayList<Game>();
+        try {
+            Class.forName(myDriver);
+            connection = getConnection();
+            // Query
+            String query = "Use Sudoku SELECT * FROM Games WHERE TypeGame = ? AND Level = ?;";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, typeGame);
+            preparedStatement.setInt(2, level);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int GameID = resultSet.getInt("GameID");
+                int TypeGame = resultSet.getInt("TypeGame");
+                int Level = resultSet.getInt("Level");
+                int Error = resultSet.getInt("Error");
+                int Empty = resultSet.getInt("Empty");
+                String Data = resultSet.getString("Data");
+
+                Game game = new Game(GameID, TypeGame, Level, Error, Empty, String_Data.StringToData(Data));
+
+                res.add(game);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // Close the resources
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return res;
+    }
 }

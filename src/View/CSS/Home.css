@@ -1,0 +1,37 @@
+. bg {
+     -fx-pref-width: 550px;
+     -fx-pref-height: 600px;
+     -fx-padding: 138px 150px;
+     -fx-alignment: center;
+     -fx-background-color: #A3F9C0;
+}
+
+.gr1 {
+    -fx-pref-width: 250px;
+    -fx-pref-height: 324px;
+}
+
+.btn {
+    -fx-pref-width: 250px;
+        -fx-pref-height: 78px;
+        -fx-alignment: center;
+        -fx-background-radius: 40px;
+        -fx-background-color: #AC7E7E;
+}
+.btn:hover {
+    -fx-opacity: 0.2;
+}
+.btn: preesed {
+    -fx-opacity: 0;
+}
+
+.text {
+    -fx-text-fill: #000;
+    -fx-font-family: "Inter";
+    -fx-font-size: 20px;
+
+    -fx-font-weight: bold;
+    -fx-pref-width: 208px;
+    -fx-pref-height: 50px;
+}
+

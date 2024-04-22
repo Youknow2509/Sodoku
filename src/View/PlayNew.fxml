@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="bg" stylesheets="@CSS/PlayNew.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.Controller.PlayNewController">
+   <children>
+      <ImageView fitHeight="62.0" fitWidth="54.25" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true" styleClass="btn" x="15.0" y="5.0">
+         <image>
+            <Image url="@../../ass/long-arrow-alt-left-solid.png" />
+         </image>
+      </ImageView>
+      <VBox alignment="CENTER" layoutX="150.0" layoutY="199.0" maxHeight="201.0" maxWidth="250.0" minHeight="201.0" minWidth="250.0" prefHeight="201.0" prefWidth="250.0" spacing="45.0">
+         <children>
+            <Button fx:id="haveUser" mnemonicParsing="false" onMouseClicked="#gotoUsers" text="Đã Có Người Dùng">
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="text" />
+               </styleClass>
+            </Button>
+            <Button fx:id="creatUser" mnemonicParsing="false" onMouseClicked="#creatUser" text="Tạo Người Dùng Mới">
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="text" />
+               </styleClass>
+            </Button>
+         </children>
+      </VBox>
+      <AnchorPane fx:id="formCreatUser" layoutX="235.0" layoutY="400.0" prefHeight="146.0" prefWidth="312.0" visible="false">
+         <children>
+            <ImageView fitHeight="34.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../ass/arrow-down-solid.png" />
+               </image>
+            </ImageView>
+            <Text layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name User New: " wrappingWidth="112.31982421875">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Text>
+            <TextField fx:id="nameNewUser" layoutX="106.0" layoutY="38.0" />
+            <Button fx:id="playWithNewUser" layoutX="174.0" layoutY="82.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#gotoLevel" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 40; -fx-background-color: #AC7E7E;" styleClass="btn" text="Tạo" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
