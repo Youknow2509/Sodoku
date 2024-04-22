@@ -12,11 +12,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="1024.0" maxWidth="1440.0" minHeight="1024.0" minWidth="1440.0" prefHeight="1024.0" prefWidth="1440.0" styleClass="AchorPane" stylesheets="@CSS/styleGame16x16.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.Controller.GameController">
+<AnchorPane fx:id="anchorPane" maxHeight="1024.0" maxWidth="1440.0" minHeight="1024.0" minWidth="1440.0" prefHeight="1024.0" prefWidth="1440.0" styleClass="AchorPane" stylesheets="@../CSS/styleGame16x16.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.Controller.GameController">
     <children>
       <ImageView fx:id="btnMenu" fitHeight="62.0" fitWidth="54.41" onMouseClicked="#handleClickMenu" pickOnBounds="true" preserveRatio="true" styleClass="menu" x="51.0" y="29.0">
          <image>
-            <Image url="@../../ass/bars-solid.png" />
+            <Image url="@../../../ass/bars-solid.png" />
          </image>
       </ImageView>
         <HBox layoutX="48.0" layoutY="100.0" prefHeight="822.0" prefWidth="1344.0" styleClass="game">
@@ -439,7 +439,7 @@
                </cursor></TextField>
             <ImageView fitHeight="60.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
                <image>
-                  <Image url="@../../ass/heart-solid.png" />
+                  <Image url="@../../../ass/heart-solid.png" />
                </image>
             </ImageView>
          </children>
