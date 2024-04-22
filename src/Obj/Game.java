@@ -3,6 +3,7 @@ package src.Obj;
 import src.Model.NodeGame;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class Game implements Serializable {
     // Attributes
@@ -122,15 +123,18 @@ public class Game implements Serializable {
     public void setEmpty(int empty) {
         setOtrong(empty);
     }
+
     // To String
     @Override
     public String toString() {
         return "Game{" +
-                "listNodeGame=" + listNodeGame +
+                "iDGame=" + iDGame +
+                ", listNodeGame=" + Arrays.toString(listNodeGame) +
                 ", size=" + size +
                 ", sizeBox=" + sizeBox +
                 ", otrong=" + otrong +
                 ", luotsai=" + luotsai +
+                ", levelGame=" + levelGame +
                 '}';
     }
 }

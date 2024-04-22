@@ -14,7 +14,7 @@ public class TestViewListGameUsers extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         String nameFile = "ListGameUsers.fxml";
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../../View/" + nameFile));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../../View/ListGameUsers/" + nameFile));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);

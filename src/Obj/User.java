@@ -30,7 +30,7 @@ public class User {
     public void setIdUser(int idUser) {
         this.idUser = idUser;
     }
-    // To String
+
     @Override
     public String toString() {
         return "User{" +
@@ -38,5 +38,4 @@ public class User {
                 ", idUser=" + idUser +
                 '}';
     }
-
 }

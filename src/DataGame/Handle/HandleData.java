@@ -16,13 +16,13 @@ public interface HandleData {
     // Xoa du lieu game chinh
     void deleteGame(int gameId);
     // Xoa du lieu game nguoi dung
-    void deleteGameUser(int gameId, int userId);
+    void deleteGameUser(int idUserGame);
     // Xoa nguoi dung
     void deleteUser(int userId);
     // Cap nhat du lieu game chinh
     void updateGame(int gameId, int typeGame, int level, int err, int empty, String data);
     // Cap nhat du lieu game nguoi dung
-    void updateGameUser(int gameId, int userId, String name, int typeGame, String Data, int err, int empty, String data);
+    void updateGameUser(int idUserGame, int gameId, int userId, String name, int typeGame, String Date, int err, int empty, String data);
     // Cap nhat nguoi dung
     void updateUser(int userId, String username);
     // Lay du lieu game chinh

@@ -165,18 +165,17 @@ public class HandleDataSql implements HandleData {
     }
 
     @Override
-    public void deleteGameUser(int gameId, int userId) {
+    public void deleteGameUser(int idUserGame) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
             Class.forName(myDriver);
             connection = getConnection();
             String query = "USE Sudoku DELETE FROM UserGames \n" +
-                    "WHERE GameID = ? AND UserID = ?;";
+                    "WHERE UserGamesID = ?;";
             preparedStatement = connection.prepareStatement(query);
 
-            preparedStatement.setInt(1, gameId);
-            preparedStatement.setInt(2, userId);
+            preparedStatement.setInt(1, idUserGame);
 
             preparedStatement.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {
@@ -262,25 +261,26 @@ public class HandleDataSql implements HandleData {
     }
 
     @Override
-    public void updateGameUser(int gameId, int userId, String name, int typeGame, String date, int err, int empty, String data) {
+    public void updateGameUser(int UserGamesID, int gameId, int userId, String name, int typeGame, String date, int err, int empty, String data) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
             Class.forName(myDriver);
             connection = getConnection();
             String query = "USE Sudoku UPDATE UserGames \n" +
-                    "SET Name = ?, TypeGame = ?, Date = ?, Error = ? , Empty = ?, Data = ? \n" +
-                    "WHERE GameID = ? AND UserID = ?;";
+                    "SET GameID = ?, UserID = ?, Name = ?, TypeGame = ?, Date = ?, Error = ? , Empty = ?, Data = ? \n" +
+                    "WHERE UserGamesID = ?;";
             preparedStatement = connection.prepareStatement(query);
 
-            preparedStatement.setString(1, name);
-            preparedStatement.setInt(2, typeGame);
-            preparedStatement.setString(3, date);
-            preparedStatement.setInt(4, err);
-            preparedStatement.setInt(5, empty);
-            preparedStatement.setString(6, data);
-            preparedStatement.setInt(7, gameId);
-            preparedStatement.setInt(8, userId);
+            preparedStatement.setInt(1, gameId);
+            preparedStatement.setInt(2, userId);
+            preparedStatement.setString(3, name);
+            preparedStatement.setInt(4, typeGame);
+            preparedStatement.setString(5, date);
+            preparedStatement.setInt(6, err);
+            preparedStatement.setInt(7, empty);
+            preparedStatement.setString(8, data);
+            preparedStatement.setInt(9, UserGamesID);
 
             preparedStatement.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {
@@ -392,6 +392,7 @@ public class HandleDataSql implements HandleData {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
+                int UserGamesID = resultSet.getInt("UserGamesID");
                 int GameID = resultSet.getInt("GameID");
                 int UserID = resultSet.getInt("UserID");
                 String Name = resultSet.getString("Name");
@@ -401,7 +402,7 @@ public class HandleDataSql implements HandleData {
                 int Empty = resultSet.getInt("Empty");
                 String Data = resultSet.getString("Data");
 
-                UserGame userGame = new UserGame(GameID, UserID, Name, TypeGame, Date, Error, Empty, String_Data.StringToData(Data));
+                UserGame userGame = new UserGame(UserGamesID, UserID, GameID, Name, TypeGame, Date, Error, Empty, String_Data.StringToData(Data));
 
                 res.add(userGame);
             }

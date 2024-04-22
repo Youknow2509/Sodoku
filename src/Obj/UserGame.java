@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 public class UserGame {
     // Var
+    private int idUserGame;
     private int idUser;
     private int idGame;
     private String date;
@@ -20,8 +21,9 @@ public class UserGame {
         super();
     }
 
-    public UserGame(int idUser, int idGame, String name, int typeGame, String date, int error, int empty, NodeGame[][] data) {
+    public UserGame(int idUserGame , int idUser, int idGame, String name, int typeGame, String date, int error, int empty, NodeGame[][] data) {
         super();
+        this.idUserGame = idUserGame;
         this.idUser = idUser;
         this.idGame = idGame;
         this.name = name;
@@ -33,6 +35,14 @@ public class UserGame {
     }
 
     // Getters and Setters
+    public int getIdUserGame() {
+        return idUserGame;
+    }
+
+    public void setIdUserGame(int idUserGame) {
+        this.idUserGame = idUserGame;
+    }
+
     public int getIdUser() {
         return idUser;
     }
@@ -57,20 +67,12 @@ public class UserGame {
         this.date = date;
     }
 
-    public int getError() {
-        return error;
+    public int getTypeGame() {
+        return typeGame;
     }
 
-    public void setError(int error) {
-        this.error = error;
-    }
-
-    public NodeGame[][] getData() {
-        return data;
-    }
-
-    public void setData(NodeGame[][] data) {
-        this.data = data;
+    public void setTypeGame(int typeGame) {
+        this.typeGame = typeGame;
     }
 
     public String getName() {
@@ -81,12 +83,12 @@ public class UserGame {
         this.name = name;
     }
 
-    public int getTypeGame() {
-        return typeGame;
+    public int getError() {
+        return error;
     }
 
-    public void setTypeGame(int typeGame) {
-        this.typeGame = typeGame;
+    public void setError(int error) {
+        this.error = error;
     }
 
     public int getEmpty() {
@@ -97,14 +99,25 @@ public class UserGame {
         this.empty = empty;
     }
 
-    // To String
+    public NodeGame[][] getData() {
+        return data;
+    }
+
+    public void setData(NodeGame[][] data) {
+        this.data = data;
+    }
+
     @Override
     public String toString() {
         return "UserGame{" +
-                "idUser=" + idUser +
+                "idUserGame=" + idUserGame +
+                ", idUser=" + idUser +
                 ", idGame=" + idGame +
                 ", date='" + date + '\'' +
+                ", typeGame=" + typeGame +
+                ", name='" + name + '\'' +
                 ", error=" + error +
+                ", empty=" + empty +
                 ", data=" + Arrays.toString(data) +
                 '}';
     }
