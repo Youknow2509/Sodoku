@@ -1,4 +1,9 @@
 
+# TODO LIST:
+- [x] **Viết lại đoạn khởi tạo game**
+- [x] **Menu Game**
+- [x] **Trạng thái game**
+
 # Contact:
 - **Mail**: *lytranvinh.work@gmail.com*
 - **Github**: *https://github.com/Youknow2509*

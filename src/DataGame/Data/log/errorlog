@@ -275,3 +275,5 @@
 2024-04-22 17:25:16.83 spid5s      [DevOpsSnapshotTelemetryTask] Evaluating the background task.
 2024-04-22 17:46:53.70 spid65      XE session 'telemetry_xevents' stopping.
 2024-04-22 17:46:53.72 spid65      XE session 'telemetry_xevents' started.
+2024-04-22 18:47:02.86 spid62      XE session 'telemetry_xevents' stopping.
+2024-04-22 18:47:02.89 spid62      XE session 'telemetry_xevents' started.

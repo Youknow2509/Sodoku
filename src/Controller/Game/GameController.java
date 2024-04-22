@@ -156,7 +156,7 @@ public class GameController {
     }
 
     // Handle Click Menu
-    public void handleClickMenu(MouseEvent event) { // todo viết todo
+    public void handleClickMenu(MouseEvent event) { // todo viết
         try {
             Stage stage = (Stage) anchorPane.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/src/View/Home.fxml"));
