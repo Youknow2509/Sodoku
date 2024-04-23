@@ -12,7 +12,7 @@ public interface HandleData {
     // Them du lieu game chinh
     void addGame(int typeGame, int level, int err, int empty, String data);
     // Them du lieu game nguoi dung
-    void addGameUser(int gameId, int userId, String name, int type, int err, int empty, String data);
+    void addGameUser(int gameId, int userId, String name, int type, String date, int err, int empty, String data);
     // Xoa du lieu game chinh
     void deleteGame(int gameId);
     // Xoa du lieu game nguoi dung

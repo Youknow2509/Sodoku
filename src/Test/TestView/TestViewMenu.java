@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 public class TestViewMenu extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../../View/Menu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../../View/Game/Menu.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);

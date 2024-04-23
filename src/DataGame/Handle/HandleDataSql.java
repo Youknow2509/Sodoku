@@ -96,23 +96,25 @@ public class HandleDataSql implements HandleData {
     }
 
     @Override
-    public void addGameUser(int gameId, int userId, String name, int typeGame, int err, int empty, String data) {
+    public void addGameUser(int gameId, int userId, String name, int typeGame, String date, int err, int empty, String data) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
             Class.forName(myDriver);
             connection = getConnection();
-            String query = "USE Sudoku INSERT INTO UserGames (GameID, UserID, Name, TypeGame, Error, Empty, Data)  " +
-                    "VALUES (?, ?, ? ?, ?, ?, ?);";
+            String query = "USE Sudoku INSERT INTO UserGames (GameID, UserID, Name, TypeGame, Date, Error, Empty , Data) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
             preparedStatement = connection.prepareStatement(query);
 
             preparedStatement.setInt(1, gameId);
             preparedStatement.setInt(2, userId);
             preparedStatement.setString(3, name);
             preparedStatement.setInt(4, typeGame);
-            preparedStatement.setInt(5, err);
-            preparedStatement.setInt(6, empty);
-            preparedStatement.setString(7, data);
+            preparedStatement.setString(5, java.sql.Date.valueOf(date).toString());
+            preparedStatement.setInt(6, err);
+            preparedStatement.setInt(7, empty);
+            preparedStatement.setString(8, data);
 
             preparedStatement.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {

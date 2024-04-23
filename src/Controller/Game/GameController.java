@@ -11,6 +11,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import src.Controller.ListGameUsers.EditGameUserController;
+import src.DataGame.Handle.HandleData;
+import src.DataGame.Handle.HandleDataSql;
 import src.Model.NodeGame;
 import src.Model.Validate;
 import src.Obj.Game;
@@ -36,6 +38,7 @@ public class GameController {
     private Game game;
     private User user;
     private Validate validate;
+    private HandleData handleData;
     private List<List<Button>> lNode;
     private List<Button> lNummber;
     public static Button buttonNodeClickedAfter;
@@ -49,6 +52,7 @@ public class GameController {
         this.user = userGame.getUser();
 
         validate = new Validate(game);
+        handleData = new HandleDataSql();
 
         this.SIZE = game.getSize();
         lNode = new ArrayList<>();
@@ -73,6 +77,10 @@ public class GameController {
         }
         if (game.getError() < 0) {
             helpPopupStage(0);
+        }
+        UserGame userGameTemp = handleData.getUserGameById(userGame.getIdUser());
+        if (userGameTemp != null) {
+            handleData.deleteGameUser(userGame.getIdUserGame());
         }
     }
 
@@ -146,17 +154,22 @@ public class GameController {
     }
 
     // Handle Click Menu
-    public void handleClickMenu(MouseEvent event) { // todo viết
+    public void handleClickMenu(MouseEvent event) {
         try {
-            Stage stage = (Stage) anchorPane.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/src/View/Home.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/src/View/Game/Menu.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.setResizable(false);
-        } catch (IOException ex) {
-            ex.printStackTrace();
+
+            MenuController menuController = loader.getController();
+            menuController.initialize((Stage) anchorPane.getScene().getWindow(), userGame);
+
+            Stage popupStage = new Stage();
+            //popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setScene(new Scene(root));
+            popupStage.showAndWait();
+            popupStage.centerOnScreen();
+            popupStage.setResizable(false);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -179,4 +192,5 @@ public class GameController {
             e.printStackTrace();
         }
     }
+
 }

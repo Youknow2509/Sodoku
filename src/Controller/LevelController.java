@@ -93,9 +93,10 @@ public class LevelController {
         String path = "/src/View/Game/Game" + SIZE + "x" + SIZE + ".fxml";
 
         int idUserGameMaxNow = handleData.getMaxID("UserGames");
-        UserGame userGame = new UserGame(idUserGameMaxNow + 1, user.getIdUser(), game.getIDGame()
-                , "", game.getTypeGame(), "", game.getError(), game.getEmpty(),
-                game.getListNodeGame());
+
+        UserGame userGame = new UserGame(idUserGameMaxNow + 1, user.getIdUser()
+                , game.getIDGame(), "", game.getTypeGame(), "", game.getError()
+                , game.getEmpty(), game.getListNodeGame());
 
         try {
             Stage stage = (Stage) anchorPane.getScene().getWindow();
