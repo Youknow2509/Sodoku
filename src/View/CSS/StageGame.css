@@ -1,0 +1,22 @@
+.bg {
+    -fx-pref-width: 600px;
+        -fx-alignment: center;
+        -fx-spacing: 69px;
+        -fx-background-color: #3F73D7;
+}
+
+.btn {
+    -fx-pref-width: 250px;
+            -fx-pref-height: 78px;
+            -fx-alignment: center;
+            -fx-background-radius: 40px;
+            -fx-background-color: #AC7E7E;
+}
+
+.btn:hover {
+    -fx-opacity: 0.2;
+}
+
+.btn: preesed {
+    -fx-opacity: 0;
+}

@@ -8,7 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import src.Controller.ListGameUsers.EditGameUserController;
 import src.Model.NodeGame;
 import src.Model.Validate;
 import src.Obj.Game;
@@ -39,10 +41,12 @@ public class GameController {
     public static Button buttonNodeClickedAfter;
 
     // Init
-    public void initialize(User user, Game game) {
+    public void initialize(UserGame userGame) {
         // Init
-        this.game = game;
-        this.user = user;
+        this.userGame = userGame;
+
+        this.game = userGame.getGame();
+        this.user = userGame.getUser();
 
         validate = new Validate(game);
 
@@ -65,24 +69,10 @@ public class GameController {
     // Game Check
     public void gameCheck() {
         if (game.getEmpty() <= 0) {
-            // Check Win
-            System.out.println("Win");
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            System.exit(0);
+            helpPopupStage(1);
         }
         if (game.getError() < 0) {
-            // Check Lose
-            System.out.println("Lose");
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            System.exit(0);
+            helpPopupStage(0);
         }
     }
 
@@ -167,6 +157,26 @@ public class GameController {
             stage.setResizable(false);
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    // Help popup stage
+    private void helpPopupStage(int c) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/src/View/Game/StageGame.fxml"));
+            Parent root = loader.load();
+
+            StageGameController stageGameController = loader.getController();
+            stageGameController.initialize(c, (Stage) anchorPane.getScene().getWindow());
+
+            Stage popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setScene(new Scene(root));
+            popupStage.showAndWait();
+            popupStage.centerOnScreen();
+            popupStage.setResizable(false);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

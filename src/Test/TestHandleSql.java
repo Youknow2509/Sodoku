@@ -57,11 +57,13 @@ public class TestHandleSql {
         List<Game> lGame = handleData.getGame();
         List<UserGame> lGameUser = handleData.getGameUser();
 
-        showListUser(lUsers);
-        showListGame(lGame);
-        showListGameUser(lGameUser);
+//        showListUser(lUsers);
+//        showListGame(lGame);
+//        showListGameUser(lGameUser);
 
-        //handleData.updateGameUser(1, 3, 2, "abc", 9, GetTimeCurrent.getTimeCurrent(), 3, 10, "5 4 8 0 2 3 0 7 9 vVv 9 2 0 4 5 6 1 3 8 vVv 1 3 6 7 0 9 2 0 5 vVv 2 1 3 5 4 7 8 9 6 vVv 4 6 5 0 9 0 3 0 7 vVv 7 8 9 3 6 0 4 5 2 vVv 3 5 1 0 7 2 9 8 4 vVv 6 9 4 8 0 5 7 2 3 vVv 8 7 2 0 3 4 5 6 1 vVv ");
+        System.out.println(handleData.getMaxID("Users"));
+        System.out.println(handleData.getMaxID("Games"));
+        System.out.println(handleData.getMaxID("UserGames"));
 
         return;
     }

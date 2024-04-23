@@ -22,19 +22,6 @@ public class UserGame {
     private HandleData handleData;
 
     // Constructor
-    public UserGame(User user, Game game, String name) {
-        super();
-        this.idUser = user.getIdUser();
-        this.idGame = game.getIDGame();
-        this.name = name;
-        this.typeGame = game.getTypeGame();
-        this.date = GetTimeCurrent.getTimeCurrent();
-        this.error = game.getError();
-        this.empty = game.getEmpty();
-        this.data = game.getListNodeGame();
-
-        handleData = new HandleDataSql();
-    }
     public UserGame(int idUserGame , int idUser, int idGame, String name, int typeGame, String date, int error, int empty, NodeGame[][] data) {
         super();
         this.idUserGame = idUserGame;

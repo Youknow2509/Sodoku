@@ -92,13 +92,18 @@ public class LevelController {
         int SIZE = game.getSize();
         String path = "/src/View/Game/Game" + SIZE + "x" + SIZE + ".fxml";
 
+        int idUserGameMaxNow = handleData.getMaxID("UserGames");
+        UserGame userGame = new UserGame(idUserGameMaxNow + 1, user.getIdUser(), game.getIDGame()
+                , "", game.getTypeGame(), "", game.getError(), game.getEmpty(),
+                game.getListNodeGame());
+
         try {
             Stage stage = (Stage) anchorPane.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
             Parent root = loader.load();
 
             GameController gameController = loader.getController();
-            gameController.initialize(user, game);
+            gameController.initialize(userGame);
 
             Scene scene = new Scene(root);
             stage.setScene(scene);

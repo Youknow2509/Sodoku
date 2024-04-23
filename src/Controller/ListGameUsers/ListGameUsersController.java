@@ -119,7 +119,7 @@ public class ListGameUsersController implements Initializable {
             Scene scene = new Scene(studentViewParent);
 
             GameController controller = loader.getController();
-            controller.initialize(user, game);
+            controller.initialize(userGame);
 
             stage.setScene(scene);
             stage.centerOnScreen();

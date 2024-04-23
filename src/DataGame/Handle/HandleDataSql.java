@@ -472,36 +472,43 @@ public class HandleDataSql implements HandleData {
     @Override
     public int getMaxID(String table) {
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
+        Statement statement = null;
         ResultSet resultSet = null;
         int res = 0;
         try {
             Class.forName(myDriver);
             connection = getConnection();
-            // Query
-            String query = "Use Sudoku SELECT MAX(?) as IDMax FROM ? ;";
-            preparedStatement = connection.prepareStatement(query);
+            String query = "Use Sudoku ";
+
             if (table.equals("Users")) {
-                preparedStatement.setString(1, "UserID");
-                preparedStatement.setString(2, "Users");
+                query += "SELECT MAX(UserID) AS IDMax FROM Users;";
             } else if (table.equals("Games")) {
-                preparedStatement.setString(1, "GameID");
-                preparedStatement.setString(2, "Games");
+                query += "SELECT MAX(GameID) AS IDMax FROM Games;";
             } else if (table.equals("UserGames")) {
-                preparedStatement.setString(1, "UserGamesID");
-                preparedStatement.setString(2, "UserGames");
+                query += "SELECT MAX(UserGamesID) AS IDMax FROM UserGames;";
+            } else {
+                throw new RuntimeException("Table not found");
             }
 
-            preparedStatement.executeQuery();
-            res = resultSet.getInt("IDMax");
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+
+            if (resultSet.next()) {
+                res = resultSet.getInt("IDMax");
+            } else {
+                throw new RuntimeException("No data returned from the query");
+            }
 
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         } finally {
             // Close the resources
             try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
                 }
                 if (connection != null) {
                     connection.close();
