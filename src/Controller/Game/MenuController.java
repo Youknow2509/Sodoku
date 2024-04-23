@@ -52,14 +52,14 @@ public class MenuController {
 
     // Handle Event luu
     public void luu(MouseEvent event) {
-        UserGame userGameTemp = handleData.getUserGameById(userGame.getUser().getIdUser());
+        UserGame userGameTemp = handleData.getUserGameById(this.userGame.getIdUserGame());
         if (userGameTemp == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/src/View/Game/InputName.fxml"));
                 Parent root = loader.load();
 
                 InputName inputName = loader.getController();
-                inputName.initialize(userGame);
+                inputName.initialize(this.userGame);
 
                 Stage popupStage = new Stage();
                 popupStage.initModality(Modality.APPLICATION_MODAL);
@@ -71,11 +71,10 @@ public class MenuController {
                 e.printStackTrace();
             }
         } else {
-            handleData.updateGameUser(userGameTemp.getIdUserGame() , userGameTemp.getIdGame(),
-                    userGameTemp.getIdUser(), userGameTemp.getName(),
-                    userGameTemp.getTypeGame(), GetTimeCurrent.getTimeCurrent(),
-                    userGameTemp.getError(), userGameTemp.getEmpty()
-                    , String_Data.DataToString(userGameTemp.getData()));
+            handleData.updateGameUser(userGameTemp.getIdUserGame(), userGameTemp.getIdGame(),
+                    userGameTemp.getIdUser(), userGameTemp.getName(), userGameTemp.getTypeGame(),
+                    GetTimeCurrent.getTimeCurrent(), this.userGame.getError(),
+                    this.userGame.getEmpty(), String_Data.DataToString(this.userGame.getData()));
         }
         helpGoToHome();
     }

@@ -18,6 +18,7 @@ import src.Model.Validate;
 import src.Obj.Game;
 import src.Obj.User;
 import src.Obj.UserGame;
+import src.Utils.GetTimeCurrent;
 import src.Utils.HandleFillColorNode;
 import src.Utils.IdToLocation;
 
@@ -142,6 +143,7 @@ public class GameController {
             )) {
                 buttonNodeClickedAfter.setText(String.valueOf(n));
                 game.setEmpty(game.getEmpty() - 1);
+                game.getData()[IdToLocation.getIdRow(buttonNodeClickedAfter.getId())][IdToLocation.getIdCol(buttonNodeClickedAfter.getId())].setValue(n);
             } else {
                 game.setError(game.getError() - 1);
                 health.setText(String.valueOf(game.getError()));
@@ -160,7 +162,12 @@ public class GameController {
             Parent root = loader.load();
 
             MenuController menuController = loader.getController();
-            menuController.initialize((Stage) anchorPane.getScene().getWindow(), userGame);
+
+            menuController.initialize((Stage) anchorPane.getScene().getWindow(), new UserGame(
+                    userGame.getIdUserGame(), userGame.getIdGame(), userGame.getIdUser(),
+                    userGame.getName(), game.getTypeGame(), GetTimeCurrent.getTimeCurrent()
+                    , game.getError(), game.getEmpty(), game.getListNodeGame()
+            ));
 
             Stage popupStage = new Stage();
             //popupStage.initModality(Modality.APPLICATION_MODAL);
