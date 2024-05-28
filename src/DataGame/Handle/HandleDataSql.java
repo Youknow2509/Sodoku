@@ -13,7 +13,7 @@ public class HandleDataSql implements HandleData {
     // Var final sql
     private final String url = "jdbc:sqlserver://localhost:1435;encrypt=true;trustServerCertificate=true" +
             ";username=sa" +
-            ";password=P@ss12345;";
+            ";password=P@ss12345";
     private final String myDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     //
 
