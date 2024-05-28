@@ -2,5 +2,13 @@
 **/.idea
 .DS_Store
 **/DS_Store
-out
+
 **/Data/
+*.iml
+**/*.iml
+src/DataGame/Data/
+**/src/DataGame/Data/
+
+
+out/
+**/out/
