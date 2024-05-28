@@ -23,6 +23,18 @@
     MySQL
 ## Scene Builder 21.0.0
 
+## How to run:
+- Clone project về máy.
+- Mở project bằng IntelliJ IDEA (hoặc bất kỳ IDE nào khác).
+- Cài đặt thư viện `javafx-sdk-22.0.1` vào project.
+- Cài đặt `Java OpenJDK 17.0.10 Corretto`.
+- Cài đặt `Scene Builder 21.0.0`.
+- Cài đặt driver `sqljdbc_12.6` (để kết nối database MySQL).
+    + File query base: `src/DataGame/Querry/SQLQuery_1.sql`.
+    + Sửa lại user và pass để đăng nhập trong `src/DataGame/Handle/HandleDataSql.java`.
+- Thêm VM options vào project
+- Chạy file `main.java` trong thư mục `src/Test/Main.java`.
+
 # Figma: 
 - https://www.figma.com/file/5uljFBQ2N18PUXL189NlnY/Sodoku?type=design&node-id=0%3A1&mode=design&t=IKcUN1p2mMKyHdUQ-1
 
